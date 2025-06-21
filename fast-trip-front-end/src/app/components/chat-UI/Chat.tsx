@@ -4,7 +4,7 @@ import ChatMessages from "./components/chatMessages/ChatMessages";
 
 export default function ChatComponent() {
   return (
-    <div className="flex-1 bg-[#f4f4f4] p-2 sm:p-6 justify-between flex flex-col h-screen">
+    <div className="flex-1 bg-[#f4f4f4] rounded p-2 sm:p-6 justify-between flex flex-col h-screen">
       <ChatHeader />
       <div
         id="messages"
