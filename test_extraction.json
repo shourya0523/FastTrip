@@ -1,0 +1,21 @@
+{
+    "budget": "$3000",
+    "starting_location": "New York",
+    "destination": "Paris",
+    "accessibility_needs": "",
+    "dietary_needs": "vegetarian",
+    "age_group_of_travelers": "",
+    "interests": [
+        "Art",
+        "museums",
+        "good food"
+    ],
+    "how_packed_trip": "balanced",
+    "ok_with_walking": true,
+    "dates_of_travel": {
+        "start_date": "2025-03-15",
+        "end_date": "2025-03-22"
+    },
+    "trip_type": "solo trip",
+    "number_of_travelers": 1
+}
