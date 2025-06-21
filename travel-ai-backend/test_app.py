@@ -14,7 +14,7 @@ from app.models.travel_models import FlightSearchResponse
 def client():
     """Create a test client for the FastAPI app."""
     with TestClient(app) as c:
-        yield c
+        yield c             
 
 @pytest.fixture
 def mock_serpapi_response():
