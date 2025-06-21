@@ -1,0 +1,20 @@
+{
+    "budget": "1500",
+    "starting_location": "Boston",
+    "destination": "Nashville",
+    "accessibility_needs": "my friend has a walker",
+    "dietary_needs": "vegetarian",
+    "age_group_of_travelers": "20s",
+    "interests": [
+        "music",
+        "food"
+    ],
+    "how_packed_trip": "relaxed",
+    "ok_with_walking": true,
+    "dates_of_travel": {
+        "start_date": "2024-07-04",
+        "end_date": "2024-07-07"
+    },
+    "trip_type": "fun friends' adventure",
+    "number_of_travelers": 2
+}
