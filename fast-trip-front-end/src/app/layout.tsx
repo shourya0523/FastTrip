@@ -46,6 +46,7 @@ export default function RootLayout({
             <ThemeProvider theme={theme}>
               <Header />
               <div className="px-[160px] max-md:px-4 ">{children}</div>
+              <Footer />
             </ThemeProvider>
           </AppRouterCacheProvider>
         </StyledEngineProvider>

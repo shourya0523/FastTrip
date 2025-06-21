@@ -5,15 +5,15 @@ export default function ChatAction() {
   return (
     <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
       <div className="relative flex">
-        {/* <button
+        <button
           type="button"
           className=" w-full cursor-pointer inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-[#0BC187]  hover:opacity-70 focus:outline-none"
         >
           <span className="font-bold">View My Trip Plan</span>
           <Space left={4} />
           <InsertEmoticonIcon />
-        </button> */}
-        <span className="absolute inset-y-0 flex items-center">
+        </button>
+        {/* <span className="absolute inset-y-0 flex items-center">
           <button
             type="button"
             className=" cursor-pointer inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
@@ -117,7 +117,7 @@ export default function ChatAction() {
               <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
             </svg>
           </button>
-        </div>
+        </div> */}
       </div>
     </div>
   );

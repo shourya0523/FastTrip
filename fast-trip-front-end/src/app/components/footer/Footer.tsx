@@ -4,22 +4,15 @@ import { Typography } from "@mui/material";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export default function Footer() {
-  const pathname = usePathname();
-
-  const isHome = pathname === "/";
   return (
     <footer
-      className={`${
-        isHome ? "fixed" : "mt-8"
-      }  w-full bottom-0 flex items-center justify-between px-[160px] max-md:px-4 border-t border-lightGrey h-[80px] bg-white max-md:flex-col-reverse max-md:justify-evenly`}
+      className={` mt-12  w-full bottom-0 flex items-center justify-between px-[160px] max-md:px-4 border-t border-lightGrey h-[80px] bg-white max-md:flex-col-reverse max-md:justify-evenly`}
       aria-label="Rodapé do site Datapanp"
     >
       <Typography variant="body1" color="darkGrey">
-        Datapanp © 2025 – Todos os direitos reservados.
+        Fast Trip © 2025 – All rights reserved.
       </Typography>
 
       <nav
@@ -40,14 +33,14 @@ export default function Footer() {
         >
           <InstagramIcon />
         </span>
-        <Link
-          href="https://www.linkedin.com/company/datapanp/"
-          target="_blank"
+        <span
+          aria-hidden="true"
+          className="opacity-30 cursor-not-allowed"
           rel="noopener noreferrer"
           aria-label="Ir para o LinkedIn da Datapanp"
         >
           <LinkedInIcon className="cursor-pointer" />
-        </Link>
+        </span>
       </nav>
     </footer>
   );
