@@ -19,8 +19,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Data PANP",
-    default: "Data PANP",
+    template: "%s | Fast Trip",
+    default: "Fast Trip",
   },
   description:
     "Pesquise, interaja e converta mais de 275 milhões de contatos em mais de 73 milhões de empresas com a plataforma de inteligência de vendas e engajamento Data PUNP.",

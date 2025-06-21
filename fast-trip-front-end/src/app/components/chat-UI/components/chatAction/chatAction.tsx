@@ -1,7 +1,18 @@
+import Space from "@/app/components/space/Space";
+import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
+
 export default function ChatAction() {
   return (
     <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
       <div className="relative flex">
+        {/* <button
+          type="button"
+          className=" w-full cursor-pointer inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-[#0BC187]  hover:opacity-70 focus:outline-none"
+        >
+          <span className="font-bold">View My Trip Plan</span>
+          <Space left={4} />
+          <InsertEmoticonIcon />
+        </button> */}
         <span className="absolute inset-y-0 flex items-center">
           <button
             type="button"
@@ -94,7 +105,7 @@ export default function ChatAction() {
           </button>
           <button
             type="button"
-            className=" cursor-pointer inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-[#0DABC7]  hover:opacity-70 focus:outline-none"
+            className=" cursor-pointer inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-[#0BC187]  hover:opacity-70 focus:outline-none"
           >
             <span className="font-bold">Send</span>
             <svg

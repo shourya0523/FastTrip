@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import logo from "../../../../public/logo.png";
+import Link from "next/link";
 
 export default function Header() {
   return (
@@ -11,10 +12,10 @@ export default function Header() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="/">
             <span className="sr-only">Your Company</span>
             <Image src={logo} alt="Fast Trip Logo" width={150} />
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
