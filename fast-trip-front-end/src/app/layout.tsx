@@ -44,6 +44,7 @@ export default function RootLayout({
         <StyledEngineProvider injectFirst>
           <AppRouterCacheProvider>
             <ThemeProvider theme={theme}>
+              <Header />
               <div className="px-[160px] max-md:px-4 ">{children}</div>
             </ThemeProvider>
           </AppRouterCacheProvider>

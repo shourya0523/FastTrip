@@ -1,12 +1,22 @@
 "use client";
 
+import { Typography } from "@mui/material";
+import Chat from "./components/chat-UI/Chat";
+import Space from "./components/space/Space";
+
 export default function Home() {
   return (
     <section
-      className="flex max-md:flex-col pt-32 max-md:pt-2 justify-around items-center"
+      className="flex flex-col pt-32 max-md:pt-2 justify-around items-center"
       aria-label="Seção de destaque para prospecção de clientes"
     >
-      <p>hi</p>
+      <Typography variant="title">
+        Hey, ready to start personalizing your trip?
+      </Typography>
+      <Space top={20} />
+      <div className="lg:w-[600px] flex justify-center">
+        <Chat />
+      </div>
     </section>
   );
 }

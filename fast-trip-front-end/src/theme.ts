@@ -120,53 +120,53 @@ theme = createTheme({
 
   palette: {
     primary: {
-      main: "#0AA86F",
+      main: "#0BC192", // Cor principal da marca (Teal)
     },
     secondary: {
-      main: "#19D28F",
+      main: "#0DABC7", // Cor secundária leve e acessível (Aqua)
     },
     text: {
-      primary: "#1E3C31",
+      primary: "#1E3C31", // Texto escuro com ótimo contraste
     },
     light: theme.palette.augmentColor({
       color: {
-        main: "#C5DFD6",
+        main: "#C5DFD6", // Tons de fundo leve (mantido)
       },
       name: "light",
     }),
     lightest: theme.palette.augmentColor({
       color: {
-        main: "#EBF6F2",
+        main: "#EBF6F2", // Fundo geral mais claro (mantido)
       },
       name: "lightest",
     }),
     black: theme.palette.augmentColor({
       color: {
-        main: "#1E3C31",
+        main: "#1E3C31", // Usado como texto ou fundo escuro
       },
       name: "black",
     }),
     defaultGrey: theme.palette.augmentColor({
       color: {
-        main: "#AAAAAA",
+        main: "#AAAAAA", // Ícones ou textos desabilitados
       },
       name: "defaultGrey",
     }),
     lightGrey: theme.palette.augmentColor({
       color: {
-        main: "#DDDDDD",
+        main: "#DDDDDD", // Linhas, bordas suaves
       },
       name: "lightGrey",
     }),
     darkGrey: theme.palette.augmentColor({
       color: {
-        main: "#666666",
+        main: "#666666", // Texto secundário, ícones
       },
       name: "darkGrey",
     }),
     purple: theme.palette.augmentColor({
       color: {
-        main: "#7723FF",
+        main: "#7A43EF", // Destaque criativo, usado com moderação
       },
       name: "purple",
     }),
