@@ -1,0 +1,289 @@
+# AccessibleTravel AI - Hackathon Development Rules
+
+## Project Context
+You are working on AccessibleTravel AI, an AI-powered travel planning platform focused on accessibility-conscious travelers 55+. This is a 48-hour hackathon with 3 developers (2 backend, 1 frontend) working concurrently on skeleton features first, then advanced features.
+
+## Architecture Overview
+- Backend: FastAPI (Python 3.9+) with OpenAI GPT-4, Google Places, Amadeus Flights
+- Frontend: React 18 + Tailwind CSS with accessibility-first design
+- APIs: RESTful with session-based state management (no persistence)
+- Target Users: 55+ travelers with mobility considerations
+
+## Development Principles
+
+### Skeleton-First Development
+- Prioritize working skeleton features (chat → search → itinerary → export)
+- Advanced features (voice, editing, booking) only after skeleton is complete
+- Each feature must work end-to-end before moving to next
+- Demo-ready code over perfect code
+
+### Accessibility-First Design
+- All UI components must support screen readers
+- Minimum font size: 18px (1.125rem)
+- Color contrast ratio: 4.5:1 minimum
+- Large clickable areas (minimum 44px)
+- Keyboard navigation support
+- ARIA labels on all interactive elements
+
+### Concurrent Development
+- Clear API contracts defined upfront
+- Mock-first integration approach
+- Independent development paths with shared interfaces
+- Hourly synchronization checkpoints
+
+## Code Standards
+
+### Python (Backend)
+- Use Python 3.9+ features and type hints
+- Follow PEP 8 style guide
+- Async/await for all I/O operations
+- Pydantic models for data validation
+- Descriptive variable names (accessibility_score, not acc_scr)
+- Functions under 50 lines when possible
+- Comprehensive error handling with user-friendly messages
+
+### JavaScript/React (Frontend)
+- Functional components with hooks only
+- TypeScript for type safety
+- Destructuring for props and state
+- Arrow functions for callbacks
+- Meaningful component names (AccessibilityScore, not AccScore)
+- Components under 100 lines when possible
+- Tailwind utility classes only (no custom CSS)
+
+### File Naming
+- Python: snake_case for files and functions
+- JavaScript: camelCase for variables, PascalCase for components
+- Descriptive names: flight_extractor.py not fe.py
+
+## API Design Standards
+
+### Request/Response Format
+```python
+# Always use Pydantic models
+class FlightSearchRequest(BaseModel):
+    origin: str
+    destination: str
+    departure_date: date
+    accessibility_needs: List[AccessibilityService] = []
+
+class FlightSearchResponse(BaseModel):
+    offers: List[FlightOffer]
+    accessibility_summary: Dict[str, Any]
+    search_id: str
+```
+
+### Error Handling
+- Structured error responses with helpful messages
+- Graceful degradation for API failures
+- User-friendly error messages (no stack traces)
+- Fallback to mock data when external APIs fail
+
+### Session Management
+```python
+# Consistent session handling
+from app.utils.session_manager import get_session, update_session
+
+session = get_session(session_id)
+session['user_preferences'] = preferences
+update_session(session_id, session)
+```
+
+## Specific Implementation Guidelines
+
+### AI/LLM Integration
+- Use structured prompts with clear examples
+- Always validate LLM outputs before returning
+- Include timeout handling (30 seconds max)
+- Cache common responses during development
+- Provide fallback responses for failures
+
+### Flight API Integration (Amadeus)
+- Use test environment for hackathon
+- Implement proper OAuth2 flow
+- Calculate accessibility scores for all flights
+- Handle rate limiting gracefully
+- Extract structured data from API responses
+
+### Google Places Integration
+- Focus on hotels and activities with accessibility data
+- Use Place Details API for comprehensive information
+- Filter results by accessibility requirements
+- Cache responses to avoid rate limits
+
+### Frontend Components
+- Use Tailwind utility classes exclusively
+- Implement proper loading states
+- Support both mouse and keyboard navigation
+- Include ARIA labels and roles
+- Test with screen reader compatibility
+
+## Demo-Specific Requirements
+
+### Performance Targets
+- Chat response: <3 seconds
+- API search: <5 seconds
+- Itinerary generation: <10 seconds
+- PDF export: <5 seconds
+- Page load: <2 seconds
+
+### Reliability Features
+- Fallback to mock data if APIs fail
+- Graceful error handling with user feedback
+- Offline demo mode for presentation
+- Multiple demo scenarios prepared
+
+### Presentation Quality
+- Large, clear fonts throughout
+- High contrast colors
+- Smooth animations and transitions
+- Professional export documents
+- Clean, uncluttered interface
+
+## Development Workflow
+
+### Commit Standards
+- Conventional commits: feat:, fix:, docs:
+- Include context: "feat(flights): add Amadeus accessibility scoring"
+- Reference skeleton vs advanced: "feat(skeleton): chat parameter extraction"
+
+### Testing Strategy
+- Focus on happy path for demo
+- Test with realistic data
+- Manual testing over unit tests for speed
+- Integration testing at checkpoints
+
+### Code Reviews
+- Quick reviews for API contracts
+- Focus on integration points
+- Don't block on style during hackathon
+- Pair programming for complex features
+
+## Emergency Protocols
+
+### If APIs Fail
+1. Switch to mock responses immediately
+2. Inform team via shared channel
+3. Continue development with realistic data
+4. Document what would work with real APIs
+
+### If Behind Schedule
+1. Cut advanced features immediately
+2. Focus on skeleton demo readiness
+3. Use pre-generated data for demo
+4. Simplify UI to basic functional version
+
+### If Integration Breaks
+1. Isolate the problem quickly
+2. Use mock data to unblock others
+3. Parallel debug while development continues
+4. Have backup demo ready
+
+## API Contracts (Enforced)
+
+### Chat Endpoint
+```python
+POST /api/chat
+Request: {"message": str, "session_id": str}
+Response: {
+    "extracted_params": Dict[str, Any],
+    "follow_up_questions": List[str],
+    "session_id": str
+}
+```
+
+### Search Endpoint
+```python
+POST /api/search
+Request: {"preferences": Dict, "session_id": str}
+Response: {
+    "flights": List[FlightOffer],
+    "hotels": List[HotelOffer],
+    "activities": List[ActivityOffer],
+    "session_id": str
+}
+```
+
+### Itinerary Generation
+```python
+POST /api/generate-itinerary
+Request: {"search_results": Dict, "session_id": str}
+Response: {
+    "itinerary": ItineraryResponse,
+    "accessibility_summary": Dict[str, Any],
+    "session_id": str
+}
+```
+
+## Accessibility Scoring System
+
+### Scoring Criteria (0-10 scale)
+- Direct flights: +2 points
+- Wheelchair accessible venues: +2 points
+- Ground floor access: +1.5 points
+- Accessible transportation: +1.5 points
+- Short walking distances: +1 point
+- Accessible parking: +1 point
+- Medical facilities nearby: +0.5 points
+
+### Implementation
+```python
+def calculate_accessibility_score(item: Dict) -> Tuple[float, List[str]]:
+    score = 5.0  # Base score
+    notes = []
+    
+    # Apply scoring criteria
+    # Return score (0-10) and explanation notes
+    return min(10.0, max(0.0, score)), notes
+```
+
+## Mock Data Strategy
+
+### Development Mocks
+- Realistic accessibility data for NYC
+- Varied accessibility scores (3-9 range)
+- Multiple options for each category
+- Consistent data structure across all APIs
+
+### Demo Mocks
+- Curated "perfect" accessibility scenarios
+- Predetermined user personas
+- Reliable demonstration data
+- Fallback for all API endpoints
+
+## Success Metrics
+
+### Technical Metrics
+- API response time <5 seconds
+- Accessibility score accuracy >90%
+- Demo completion rate 100%
+- Error rate <5%
+
+### UX Metrics
+- Font size ≥18px throughout
+- Color contrast ≥4.5:1
+- Clickable areas ≥44px
+- Keyboard navigation 100%
+- Screen reader compatibility
+
+## Communication Rules
+
+### Hourly Updates
+- Current task and status
+- Blockers and dependencies
+- ETA for current milestone
+- Help needed (if any)
+
+### API Changes
+- All changes must be announced
+- Team approval for breaking changes
+- Update shared contracts immediately
+- Test integration points
+
+### Help Protocol
+- Ask for help after 15 minutes stuck
+- Share screens for complex issues
+- Pair program for critical features
+- Escalate to team lead if needed
+
+Remember: The goal is a working, impressive demo that showcases AI-powered accessibility travel planning. Prioritize working features over perfect code, and always consider the accessibility needs of your target users.
