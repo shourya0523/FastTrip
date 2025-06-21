@@ -1,0 +1,73 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.env
+.env.* 
+!.env.example
+
+# Logs
+logs/
+*.log
+*.log.*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Dist / Build
+dist/
+build/
+.next/
+out/
+.next/cache/
+
+# Monorepo tools
+.pnp/
+.pnp.js
+.cache/
+turbo/
+lerna-debug.log
+
+# Coverage
+coverage/
+*.lcov
+
+# TypeScript
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+
+# Testing
+jest.cache/
+.nyc_output/
+playwright-report/
+test-results/
+
+# VSCode extensions & settings
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+# Optional: Ignore Docker files if not needed
+docker-compose.override.yml
+
+# Optional: Ignore local databases
+*.sqlite
+*.sqlite3
+
+# Optional: Ignore uploads or temp files
+uploads/
+tmp/
+temp/
+
+# Optional: Ignore lock files (only if using 1 package manager consistently)
+# yarn.lock
+# package-lock.json
+# pnpm-lock.yaml
