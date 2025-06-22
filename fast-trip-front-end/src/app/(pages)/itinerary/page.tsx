@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 import { postData } from "@/app/lib/api";
 import GroupButton from "@/app/components/groupButton/groupButton";
 import { FlightsResponse } from "@/app/types/flight";
+import { Typography } from "@mui/material";
+import Space from "@/app/components/space/Space";
+import Divider from "@mui/material/Divider";
 
 export default function Itinerary() {
   const [flights, setFlights] = useState<FlightsResponse | null>(null);
@@ -57,19 +60,65 @@ export default function Itinerary() {
 
   return (
     <>
+      <div className="lg:w-[600px] text-center m-auto   flex flex-col justify-center items-center ">
+        <Typography variant="hero" lineHeight="50px" fontWeight="bold">
+          Your Accessible Itinerary is Ready —{" "}
+          <span className="text-[#0BC192]">Enjoy the Journey</span>
+        </Typography>
+        <Typography variant="titleSmall">
+          We’ve crafted a thoughtful travel plan just for you, fully
+          personalized, accessible, and ready to explore at your own pace.
+        </Typography>
+      </div>
+      <Space bottom={10} />
+      <Divider />
+      <Space bottom={10} />
+
+      <Typography
+        className="flex justify-center"
+        variant="title"
+        lineHeight="50px"
+        fontWeight="bold"
+      >
+        Flights
+      </Typography>
       <GroupButton
         count={flights?.offers.length || 0}
         onSelect={setSelectedIndex}
         selectedIndex={selectedIndex}
       />
-
       {flights?.offers && (
         <div className="transition-opacity duration-500 opacity-100">
           <FlightCard offer={flights.offers[selectedIndex]} />
         </div>
       )}
 
+      <Typography
+        className="flex justify-center"
+        variant="title"
+        lineHeight="50px"
+        fontWeight="bold"
+      >
+        Timeline
+      </Typography>
+      <Typography className="flex justify-center" variant="overline">
+        *Your Personalized Itinerary
+      </Typography>
+      <Space bottom={10} />
       <Timeline />
+      <Space bottom={10} />
+      <Typography
+        className="flex justify-center"
+        variant="title"
+        lineHeight="50px"
+        fontWeight="bold"
+      >
+        Maps
+      </Typography>
+      <Typography className="flex justify-center" variant="overline">
+        *Your Trip on the Map
+      </Typography>
+      <Space bottom={10} />
       <GoogleMap />
     </>
   );

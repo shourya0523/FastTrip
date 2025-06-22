@@ -28,7 +28,7 @@ export default function GroupButton({
         },
       }}
     >
-      <Typography variant="overline">Flight options for you</Typography>
+      <Typography variant="overline">*Flight options for you</Typography>
       <ButtonGroup
         color="secondary"
         size="large"
