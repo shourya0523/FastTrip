@@ -38,7 +38,7 @@ def test_successful_flight_search(client, monkeypatch, mock_serpapi_response):
     
     # Define a valid request payload
     valid_request = {
-        "origin": "SFO",
+        "origin": "San Francisco",
         "destination": "JFK",
         "departure_date": "2025-09-15",
         "return_date": "2025-09-22",
@@ -92,3 +92,37 @@ def test_flight_search_validation(client, invalid_payload, expected_detail_part)
     assert response.status_code == 422
     # Use re.search to correctly handle the regex patterns for Pydantic's structured errors
     assert re.search(expected_detail_part, str(response.json()["detail"]), re.IGNORECASE) 
+
+def test_chat_endpoint(client, monkeypatch):
+    """
+    Tests the chat endpoint, ensuring it handles session state and returns the correct response format.
+    """
+    # Mock the call_gemini_update_state function to return a predictable response
+    def mock_update_state(state, message, history):
+        # Simulate extracting one piece of information and asking the next question
+        updated_state = state.copy()
+        updated_state["destination"] = "New York"
+        return updated_state, ["dates_of_travel"], "When would you like to travel?"
+
+    monkeypatch.setattr("app.api.chat_routes.call_gemini_update_state", mock_update_state)
+
+    # First request (no session_id)
+    initial_request = {"message": "I want to go to New York"}
+    response = client.post("/api/v1/chat/chat", json=initial_request)
+
+    # Assertions for the first response
+    assert response.status_code == 200
+    data = response.json()
+    assert data["extracted_params"]["destination"] == "New York"
+    assert data["follow_up_questions"] == ["When would you like to travel?"]
+    assert "session_id" in data
+    session_id = data["session_id"]
+
+    # Second request (with session_id)
+    second_request = {"message": "Next week", "session_id": session_id}
+    response = client.post("/api/v1/chat/chat", json=second_request)
+
+    # Assertions for the second response
+    assert response.status_code == 200
+    data = response.json()
+    assert data["session_id"] == session_id  # Ensure session is maintained

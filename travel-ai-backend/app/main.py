@@ -5,7 +5,7 @@ Simple FastAPI app for hackathon
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import flight_routes
+from app.api import flight_routes, chat_routes
 
 # Create app
 app = FastAPI(title="Travel AI Backend", version="1.0.0")
@@ -21,6 +21,7 @@ app.add_middleware(
 
 # Include routes
 app.include_router(flight_routes.router, prefix="/api/v1/flights", tags=["Flights"])
+app.include_router(chat_routes.router, prefix="/api/v1/chat", tags=["Chat"]) 
 
 
 @app.get("/")
