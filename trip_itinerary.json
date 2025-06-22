@@ -1,0 +1,340 @@
+{
+  "lodging": {
+    "name": "Bode Nashville",
+    "address": "401 President Ronald Reagan Wy, Nashville",
+    "check_in_date": "2024-08-08",
+    "check_out_date": "2024-08-15"
+  },
+  "itinerary": [
+    {
+      "day": 1,
+      "date": "2024-08-08",
+      "activities": [
+        {
+          "time": "3:00 PM",
+          "type": "lodging",
+          "name": "Check into Bode Nashville",
+          "address": "401 President Ronald Reagan Wy, Nashville",
+          "duration": "1 hour"
+        },
+        {
+          "time": "4:00 PM",
+          "type": "activity",
+          "name": "Settle in and explore hotel common areas",
+          "address": "401 President Ronald Reagan Wy, Nashville",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "5:30 PM",
+          "type": "dinner",
+          "name": "The Goat Sobro",
+          "address": "211 Elm St, Nashville",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "7:30 PM",
+          "type": "activity",
+          "name": "Broadway Honky Tonk Experience (accessible venues)",
+          "address": "Broadway, Nashville (various accessible venues like Tootsie's Orchid Lounge, Rippy's, Legends Corner)",
+          "duration": "2 hours"
+        }
+      ]
+    },
+    {
+      "day": 2,
+      "date": "2024-08-09",
+      "activities": [
+        {
+          "time": "8:30 AM",
+          "type": "breakfast",
+          "name": "Frothy Monkey",
+          "address": "235 Rep. John Lewis Way N, Nashville",
+          "duration": "1 hour"
+        },
+        {
+          "time": "10:00 AM",
+          "type": "attraction",
+          "name": "Country Music Hall of Fame and Museum",
+          "address": "222 Rep. John Lewis Way S, Nashville",
+          "duration": "2 hours 30 minutes"
+        },
+        {
+          "time": "12:30 PM",
+          "type": "lunch",
+          "name": "Copper Branch Vegan & Vegetarian Restaurant",
+          "address": "601 Church St, Nashville",
+          "duration": "1 hour 15 minutes"
+        },
+        {
+          "time": "2:00 PM",
+          "type": "attraction",
+          "name": "Johnny Cash Museum",
+          "address": "119 3rd Ave S, Nashville",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "6:30 PM",
+          "type": "dinner",
+          "name": "Pelato",
+          "address": "1300 3rd Ave N, Nashville",
+          "duration": "1 hour 30 minutes"
+        }
+      ]
+    },
+    {
+      "day": 3,
+      "date": "2024-08-10",
+      "activities": [
+        {
+          "time": "8:30 AM",
+          "type": "breakfast",
+          "name": "Toastique",
+          "address": "820 4th Ave N #127, Nashville",
+          "duration": "1 hour"
+        },
+        {
+          "time": "10:00 AM",
+          "type": "attraction",
+          "name": "Ryman Auditorium Tour",
+          "address": "116 5th Ave N, Nashville",
+          "duration": "2 hours"
+        },
+        {
+          "time": "12:30 PM",
+          "type": "lunch",
+          "name": "Hawkers Asian Street Food",
+          "address": "626A Main St, Nashville",
+          "duration": "1 hour 15 minutes"
+        },
+        {
+          "time": "2:30 PM",
+          "type": "activity",
+          "name": "Explore Bicentennial Capitol Mall State Park (accessible paths)",
+          "address": "600 James Robertson Pkwy, Nashville",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "6:30 PM",
+          "type": "dinner",
+          "name": "Woodlands Indian Vegetarian Cuisine",
+          "address": "3415 West End Avenue, Nashville",
+          "duration": "1 hour 30 minutes"
+        }
+      ]
+    },
+    {
+      "day": 4,
+      "date": "2024-08-11",
+      "activities": [
+        {
+          "time": "9:00 AM",
+          "type": "breakfast",
+          "name": "Grain and Berry - Nashville",
+          "address": "1806 20th Ave S, Nashville",
+          "duration": "1 hour"
+        },
+        {
+          "time": "10:30 AM",
+          "type": "attraction",
+          "name": "The Parthenon at Centennial Park (exterior view & accessible areas)",
+          "address": "2500 West End Ave, Nashville",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "12:30 PM",
+          "type": "lunch",
+          "name": "The Pharmacy Burger Parlor & Beer Garden",
+          "address": "731 Mcferrin Ave, Nashville",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "2:30 PM",
+          "type": "activity",
+          "name": "Scenic drive through East Nashville neighborhoods",
+          "address": "East Nashville (various streets)",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "6:30 PM",
+          "type": "dinner",
+          "name": "AVO",
+          "address": "4 City Blvd #104, Nashville",
+          "duration": "1 hour 30 minutes"
+        }
+      ]
+    },
+    {
+      "day": 5,
+      "date": "2024-08-12",
+      "activities": [
+        {
+          "time": "9:00 AM",
+          "type": "breakfast",
+          "name": "E+ROSE Wellness Cafe - Wedgewood-Houston",
+          "address": "610 Merritt Ave, Nashville",
+          "duration": "1 hour"
+        },
+        {
+          "time": "10:30 AM",
+          "type": "attraction",
+          "name": "Belle Meade Historic Site & Winery (accessible tour areas)",
+          "address": "5025 Harding Pike, Nashville",
+          "duration": "2 hours"
+        },
+        {
+          "time": "1:00 PM",
+          "type": "lunch",
+          "name": "Woodlands Indian Vegetarian Cuisine",
+          "address": "3415 West End Avenue, Nashville",
+          "duration": "1 hour 15 minutes"
+        },
+        {
+          "time": "2:30 PM",
+          "type": "activity",
+          "name": "Explore The Gulch neighborhood (accessible shops and murals)",
+          "address": "The Gulch, Nashville",
+          "duration": "2 hours"
+        },
+        {
+          "time": "6:30 PM",
+          "type": "dinner",
+          "name": "Library Restaurant & Lounge",
+          "address": "623 Union St First Floor, Nashville",
+          "duration": "1 hour 30 minutes"
+        }
+      ]
+    },
+    {
+      "day": 6,
+      "date": "2024-08-13",
+      "activities": [
+        {
+          "time": "8:30 AM",
+          "type": "breakfast",
+          "name": "Frothy Monkey",
+          "address": "1701 Fatherland St, Nashville",
+          "duration": "1 hour"
+        },
+        {
+          "time": "10:00 AM",
+          "type": "attraction",
+          "name": "Grand Ole Opry House Tour",
+          "address": "600 Opryland Dr, Nashville",
+          "duration": "2 hours"
+        },
+        {
+          "time": "12:30 PM",
+          "type": "lunch",
+          "name": "Opry Mills Mall Food Court",
+          "address": "433 Opry Mills Dr, Nashville",
+          "duration": "1 hour 15 minutes"
+        },
+        {
+          "time": "2:00 PM",
+          "type": "activity",
+          "name": "Accessible shopping at Opry Mills Mall",
+          "address": "433 Opry Mills Dr, Nashville",
+          "duration": "2 hours"
+        },
+        {
+          "time": "6:30 PM",
+          "type": "dinner",
+          "name": "Redheaded Stranger",
+          "address": "305 Arrington St, Nashville",
+          "duration": "1 hour 30 minutes"
+        }
+      ]
+    },
+    {
+      "day": 7,
+      "date": "2024-08-14",
+      "activities": [
+        {
+          "time": "9:00 AM",
+          "type": "breakfast",
+          "name": "E+ROSE Wellness Cafe - West Nashville at OneC1TY",
+          "address": "4 City Blvd #108, Nashville",
+          "duration": "1 hour"
+        },
+        {
+          "time": "10:30 AM",
+          "type": "activity",
+          "name": "Mural Tour by Rideshare (e.g., 12 South murals)",
+          "address": "Various locations, start around 2300 12th Ave S, Nashville",
+          "duration": "2 hours"
+        },
+        {
+          "time": "1:00 PM",
+          "type": "lunch",
+          "name": "AVO",
+          "address": "4 City Blvd #104, Nashville",
+          "duration": "1 hour 15 minutes"
+        },
+        {
+          "time": "2:30 PM",
+          "type": "activity",
+          "name": "Souvenir shopping downtown Nashville (accessible shops)",
+          "address": "Broadway and surrounding streets, Nashville",
+          "duration": "2 hours"
+        },
+        {
+          "time": "6:30 PM",
+          "type": "dinner",
+          "name": "The Goat Sobro",
+          "address": "211 Elm St, Nashville",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "8:30 PM",
+          "type": "activity",
+          "name": "Last night on Broadway (accessible venue of choice)",
+          "address": "Broadway, Nashville",
+          "duration": "1 hour 30 minutes"
+        }
+      ]
+    },
+    {
+      "day": 8,
+      "date": "2024-08-15",
+      "activities": [
+        {
+          "time": "9:00 AM",
+          "type": "breakfast",
+          "name": "Frothy Monkey",
+          "address": "235 Rep. John Lewis Way N, Nashville",
+          "duration": "1 hour"
+        },
+        {
+          "time": "10:30 AM",
+          "type": "activity",
+          "name": "Relax at hotel or last minute souvenir shopping",
+          "address": "401 President Ronald Reagan Wy, Nashville",
+          "duration": "1 hour 30 minutes"
+        },
+        {
+          "time": "12:00 PM",
+          "type": "lodging",
+          "name": "Check out from Bode Nashville",
+          "address": "401 President Ronald Reagan Wy, Nashville",
+          "duration": "30 minutes"
+        },
+        {
+          "time": "1:00 PM",
+          "type": "activity",
+          "name": "Depart Nashville",
+          "address": "Nashville International Airport (BNA) or other departure point",
+          "duration": "Variable"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-06-22T04:21:49.583873",
+    "trip_destination": "Nashville",
+    "trip_dates": {
+      "start_date": "2024-08-08",
+      "end_date": "2024-08-15"
+    },
+    "number_of_travelers": 4
+  }
+}
