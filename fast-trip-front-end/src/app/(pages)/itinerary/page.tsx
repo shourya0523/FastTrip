@@ -10,6 +10,7 @@ import { Typography } from "@mui/material";
 import Space from "@/app/components/space/Space";
 import Divider from "@mui/material/Divider";
 import DownloadButton from "@/app/components/download-button/DownloadButton";
+import trip_itinerary from "../../mocks/trip_itinerary.json";
 
 export default function Itinerary() {
   const [flights, setFlights] = useState<FlightsResponse | null>(null);
@@ -79,7 +80,6 @@ export default function Itinerary() {
       </Typography>
       <Space bottom={2} />
       <DownloadButton />
-
       <Space bottom={10} />
       <Divider />
       <Space bottom={10} />
@@ -113,7 +113,7 @@ export default function Itinerary() {
         *Your Personalized Itinerary
       </Typography>
       <Space bottom={10} />
-      <Timeline />
+      <Timeline itinerary={trip_itinerary.itinerary} />
       <Space bottom={10} />
       <Typography
         className="flex justify-center"
