@@ -126,3 +126,201 @@ def test_chat_endpoint(client, monkeypatch):
     assert response.status_code == 200
     data = response.json()
     assert data["session_id"] == session_id  # Ensure session is maintained
+
+def test_chat_endpoint_flight_parameter_extraction(client, monkeypatch):
+    """
+    Tests that the chat endpoint extracts flight parameters when conversation is complete.
+    """
+    # Mock the call_gemini_update_state function to simulate a complete conversation
+    def mock_update_state_complete(state, message, history):
+        # Simulate a complete conversation with all required fields filled
+        complete_state = {
+            "budget": "mid-range",
+            "starting_location": "San Francisco",
+            "destination": "New York",
+            "accessibility_needs": "None",
+            "dietary_needs": "No restrictions",
+            "age_group_of_travelers": "Adults",
+            "interests": ["Museums", "Food"],
+            "how_packed_trip": "Moderate",
+            "ok_with_walking": True,
+            "dates_of_travel": {"start_date": "2024-06-15", "end_date": "2024-06-22"},
+            "trip_type": "Leisure",
+            "number_of_travelers": 2
+        }
+        return complete_state, [], ""  # Empty next_question indicates completion
+
+    # Mock the extract_flight_parameters_from_state function
+    def mock_extract_flight_params(state):
+        return {
+            "origin": "San Francisco",
+            "destination": "New York",
+            "departure_date": "2024-06-15",
+            "return_date": "2024-06-22",
+            "num_travelers": 2,
+            "budget": "medium",
+            "accessibility_requirements": False
+        }
+
+    monkeypatch.setattr("app.api.chat_routes.call_gemini_update_state", mock_update_state_complete)
+    monkeypatch.setattr("app.api.chat_routes.extract_flight_parameters_from_state", mock_extract_flight_params)
+
+    # Send a message that completes the conversation
+    request = {"message": "That sounds perfect, I'm ready to book!"}
+    response = client.post("/api/v1/chat/chat", json=request)
+
+    # Assertions
+    assert response.status_code == 200
+    data = response.json()
+    
+    # Check that conversation is marked as complete
+    assert data["conversation_complete"] is True
+    assert data["follow_up_questions"] == []
+    
+    # Check that flight parameters are extracted and returned
+    assert "flight_parameters" in data
+    assert data["flight_parameters"] is not None
+    
+    flight_params = data["flight_parameters"]
+    assert flight_params["origin"] == "San Francisco"
+    assert flight_params["destination"] == "New York"
+    assert flight_params["departure_date"] == "2024-06-15"
+    assert flight_params["return_date"] == "2024-06-22"
+    assert flight_params["num_travelers"] == 2
+    assert flight_params["budget"] == "medium"
+    assert flight_params["accessibility_requirements"] is False
+
+def test_chat_endpoint_incomplete_conversation_no_flight_params(client, monkeypatch):
+    """
+    Tests that flight parameters are NOT extracted when conversation is incomplete.
+    """
+    # Mock incomplete conversation
+    def mock_update_state_incomplete(state, message, history):
+        updated_state = state.copy()
+        updated_state["destination"] = "Paris"
+        return updated_state, ["dates_of_travel", "budget"], "When would you like to travel and what's your budget?"
+
+    monkeypatch.setattr("app.api.chat_routes.call_gemini_update_state", mock_update_state_incomplete)
+
+    request = {"message": "I want to visit Paris"}
+    response = client.post("/api/v1/chat/chat", json=request)
+
+    # Assertions
+    assert response.status_code == 200
+    data = response.json()
+    
+    # Check that conversation is NOT complete
+    assert data["conversation_complete"] is False
+    assert len(data["follow_up_questions"]) > 0
+    
+    # Check that flight parameters are NOT extracted
+    assert data["flight_parameters"] is None
+
+def test_chat_endpoint_flight_parameter_extraction_error_handling(client, monkeypatch):
+    """
+    Tests error handling when flight parameter extraction fails.
+    """
+    # Mock complete conversation
+    def mock_update_state_complete(state, message, history):
+        complete_state = {
+            "budget": "luxury",
+            "starting_location": "Los Angeles",
+            "destination": "Tokyo",
+            "accessibility_needs": "Wheelchair accessible",
+            "dietary_needs": "Vegetarian",
+            "age_group_of_travelers": "Adults",
+            "interests": ["Culture", "Technology"],
+            "how_packed_trip": "Busy",
+            "ok_with_walking": False,
+            "dates_of_travel": {"start_date": "2024-08-10", "end_date": "2024-08-20"},
+            "trip_type": "Cultural",
+            "number_of_travelers": 1
+        }
+        return complete_state, [], ""  # Empty next_question indicates completion
+
+    # Mock extraction function that returns None (simulating failure)
+    def mock_extract_flight_params_failure(state):
+        return None
+
+    monkeypatch.setattr("app.api.chat_routes.call_gemini_update_state", mock_update_state_complete)
+    monkeypatch.setattr("app.api.chat_routes.extract_flight_parameters_from_state", mock_extract_flight_params_failure)
+
+    request = {"message": "Perfect, let's proceed!"}
+    response = client.post("/api/v1/chat/chat", json=request)
+
+    # Assertions
+    assert response.status_code == 200
+    data = response.json()
+    
+    # Check that conversation is complete but flight parameters are None due to extraction failure
+    assert data["conversation_complete"] is True
+    assert data["flight_parameters"] is None
+
+def test_session_stores_flight_parameters(client, monkeypatch):
+    """
+    Tests that flight parameters are stored in the session when extracted.
+    """
+    # Mock complete conversation and extraction
+    def mock_update_state_complete(state, message, history):
+        complete_state = {
+            "budget": "economy",
+            "starting_location": "Chicago",
+            "destination": "Miami",
+            "accessibility_needs": "None",
+            "dietary_needs": "No restrictions",
+            "age_group_of_travelers": "Young Adults",
+            "interests": ["Beach", "Nightlife"],
+            "how_packed_trip": "Relaxed",
+            "ok_with_walking": True,
+            "dates_of_travel": {"start_date": "2024-07-01", "end_date": "2024-07-07"},
+            "trip_type": "Leisure",
+            "number_of_travelers": 3
+        }
+        return complete_state, [], ""
+
+    def mock_extract_flight_params(state):
+        return {
+            "origin": "Chicago",
+            "destination": "Miami",
+            "departure_date": "2024-07-01",
+            "return_date": "2024-07-07",
+            "num_travelers": 3,
+            "budget": "low",
+            "accessibility_requirements": False
+        }
+
+    # Mock session management to capture stored data
+    stored_sessions = {}
+    
+    def mock_get_session(session_id):
+        return stored_sessions.get(session_id)
+    
+    def mock_update_session(session, session_id=None):
+        if session_id is None:
+            session_id = "test_session_123"
+        stored_sessions[session_id] = session
+        return session_id
+
+    monkeypatch.setattr("app.api.chat_routes.call_gemini_update_state", mock_update_state_complete)
+    monkeypatch.setattr("app.api.chat_routes.extract_flight_parameters_from_state", mock_extract_flight_params)
+    monkeypatch.setattr("app.api.chat_routes.get_session", mock_get_session)
+    monkeypatch.setattr("app.api.chat_routes.update_session", mock_update_session)
+
+    request = {"message": "All set, let's find flights!"}
+    response = client.post("/api/v1/chat/chat", json=request)
+
+    # Assertions
+    assert response.status_code == 200
+    data = response.json()
+    
+    # Check response
+    assert data["conversation_complete"] is True
+    assert data["flight_parameters"] is not None
+    
+    # Check that session contains flight parameters
+    session_id = data["session_id"]
+    stored_session = stored_sessions[session_id]
+    assert "flight_parameters" in stored_session
+    assert stored_session["flight_parameters"]["origin"] == "Chicago"
+    assert stored_session["flight_parameters"]["destination"] == "Miami"
+    assert stored_session["conversation_complete"] is True
