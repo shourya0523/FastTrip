@@ -11,6 +11,7 @@ import Space from "@/app/components/space/Space";
 import Divider from "@mui/material/Divider";
 import DownloadButton from "@/app/components/download-button/DownloadButton";
 import trip_itinerary from "../../mocks/trip_itinerary.json";
+import ItineraryMap from "@/app/components/itineraryMap/ItineraryMap";
 
 export default function Itinerary() {
   const [flights, setFlights] = useState<FlightsResponse | null>(null);
@@ -127,7 +128,8 @@ export default function Itinerary() {
         *Your Trip on the Map
       </Typography>
       <Space bottom={10} />
-      <GoogleMap />
+      <ItineraryMap itinerary={trip_itinerary.itinerary} />
+      {/* <GoogleMap /> */}
     </>
   );
 }
