@@ -4,10 +4,11 @@
 You are working on AccessibleTravel AI, an AI-powered travel planning platform focused on accessibility-conscious travelers 55+. This is a 48-hour hackathon with 3 developers (2 backend, 1 frontend) working concurrently on skeleton features first, then advanced features.
 
 ## Architecture Overview
-- Backend: FastAPI (Python 3.9+) with OpenAI GPT-4, Google Places, Amadeus Flights
+- Backend: FastAPI (Python 3.9+) with Google Gemini 2.5 Flash, Google Places, Amadeus Flights
 - Frontend: React 18 + Tailwind CSS with accessibility-first design
 - APIs: RESTful with session-based state management (no persistence)
 - Target Users: 55+ travelers with mobility considerations
+- AI Model: Google Gemini 2.5 Flash for conversation processing, itinerary generation, and place scoring
 
 ## Development Principles
 

@@ -28,6 +28,7 @@ build/
 .next/
 out/
 .next/cache/
+travel-ai-backend/.env
 
 # Monorepo tools
 .pnp/
