@@ -5,7 +5,7 @@ from ranker import PlaceScorer
 from gen_iten import TripItineraryGenerator
 import json
 
-my_api_key = "AIzaSyDwbpE5ofjrFINkyKbKtg2Rfm8aBFOhAZ8"
+my_api_key = ""
 
 def main():
     """
