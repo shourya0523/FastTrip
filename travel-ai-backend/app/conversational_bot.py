@@ -2,6 +2,7 @@ import os
 import json
 from dotenv import load_dotenv
 from datetime import date
+from app.models.travel_models import FlightSearchRequest, BudgetLevel
 
 # Gemini setup
 try:
@@ -68,7 +69,7 @@ def call_gemini_update_state(state, user_message, conversation_history=[]):
     
     prompt = f"""
     You are a friendly travel planner having a casual conversation with a user. Your goal is to help them plan their perfect trip while keeping the chat comfortable and natural.
-    Once all details are filled, you can end the chat.
+    Once all details are filled, you MUST end the chat.
     The user's trip info is stored in a JSON object. Here is the schema:
     {schema}
 
@@ -125,3 +126,62 @@ def call_gemini_update_state(state, user_message, conversation_history=[]):
         state[missing[0]] = f"mock_{missing[0]}"
         next_question = f"Could you please tell me your {missing[1].replace('_', ' ')}?" if len(missing) > 1 else "Thank you! All information is collected."
         return state, missing[1:], next_question
+
+
+def extract_flight_parameters_from_state(state):
+    """
+    Extract flight search parameters from the conversation state using Gemini.
+    Maps the collected travel information to FlightSearchRequest format.
+    """
+    prompt = f"""
+    You are a travel data processor. Extract flight search parameters from the collected travel information.
+    
+    COLLECTED TRAVEL DATA: {json.dumps(state)}
+    
+    Map this data to flight search parameters:
+    - origin: starting_location (airport code or city name)
+    - destination: destination (airport code or city name) 
+    - departure_date: start_date from dates_of_travel (YYYY-MM-DD format)
+    - return_date: end_date from dates_of_travel (YYYY-MM-DD format)
+    - num_travelers: number_of_travelers (integer)
+    - budget: map budget to "low", "medium", or "high"
+    - accessibility_requirements: true if accessibility_needs mentions any requirements, false otherwise
+    
+    RESPONSE (JSON ONLY):
+    {{
+      "origin": "EXTRACTED_ORIGIN",
+      "destination": "EXTRACTED_DESTINATION", 
+      "departure_date": "YYYY-MM-DD",
+      "return_date": "YYYY-MM-DD",
+      "num_travelers": INTEGER,
+      "budget": "low|medium|high",
+      "accessibility_requirements": BOOLEAN
+    }}
+    """
+    
+    if GEMINI_AVAILABLE and GEMINI_API_KEY:
+        genai.configure(api_key=GEMINI_API_KEY)
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        try:
+            import re
+            match = re.search(r'\{[\s\S]*\}', response.text)
+            if match:
+                flight_params = json.loads(match.group(0))
+                return flight_params
+        except Exception as e:
+            print(f"[Flight extraction error]: {e}")
+            return None
+    else:
+        # Mock extraction for testing
+        return {
+            "origin": state.get("starting_location", "Unknown"),
+            "destination": state.get("destination", "Unknown"),
+            "departure_date": state.get("dates_of_travel", {}).get("start_date", "2024-01-01"),
+            "return_date": state.get("dates_of_travel", {}).get("end_date", "2024-01-07"),
+            "num_travelers": state.get("number_of_travelers", 1),
+            "budget": "medium",
+            "accessibility_requirements": bool(state.get("accessibility_needs"))
+        }
+    
+    return None
