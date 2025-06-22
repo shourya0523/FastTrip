@@ -2,6 +2,7 @@ import aiohttp
 from typing import Dict, Any, List
 from app.models.travel_models import FlightSearchRequest
 from app.config import settings
+import pandas as pd
 
 
 class SerpApiAdapter:
@@ -119,16 +120,7 @@ class SerpApiAdapter:
     async def get_airport_code(self, city_name: str) -> str:
         """Get airport code for a city"""
         airports = {
-            "new york": "JFK",
-            "los angeles": "LAX", 
-            "chicago": "ORD",
-            "atlanta": "ATL",
-            "dallas": "DFW",
-            "denver": "DEN",
-            "san francisco": "SFO",
-            "las vegas": "LAS",
-            "orlando": "MCO",
-            "charlotte": "CLT"
+            pd.read_csv('airport_codes.csv')['city'].str.lower(): pd.read_csv('airport_codes.csv')['iata_code'].str.upper()
         }
         
         return airports.get(city_name.lower(), city_name.upper()) 
