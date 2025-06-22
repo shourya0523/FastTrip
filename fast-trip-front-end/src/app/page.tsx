@@ -13,7 +13,7 @@ export default function Home() {
       <Typography variant="title">
         Hey, ready to start personalizing your trip?
       </Typography>
-      <Space top={20} />
+      <Space top={10} />
       <div className="lg:w-[600px] flex justify-center">
         <div className="w-full relative rounded-xl p-1 bg-gradient-to-r from-[#0bc192] via-[#0dabc7] to-[#0bc192]">
           <div className="rounded-xl bg-white p-4">

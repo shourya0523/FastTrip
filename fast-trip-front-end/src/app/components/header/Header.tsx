@@ -3,6 +3,7 @@
 import Image from "next/image";
 import logo from "../../../../public/logo.png";
 import Link from "next/link";
+import ComingSoon from "@/app/icons/ComingSoon";
 
 export default function Header() {
   return (
@@ -13,7 +14,7 @@ export default function Header() {
       >
         <div className="flex lg:flex-1">
           <Link href="/">
-            <span className="sr-only">Your Company</span>
+            <span className="sr-only">Fast Trip</span>
             <Image src={logo} alt="Fast Trip Logo" width={150} />
           </Link>
         </div>
@@ -42,26 +43,29 @@ export default function Header() {
         </div>
         <div className="hidden lg:flex lg:gap-x-12">
           <div className="relative">
-            <button
-              type="button"
-              className="flex items-center gap-x-1 text-sm/6 font-semibold text-gray-900"
-              aria-expanded="false"
-            >
-              Discover
-              <svg
-                className="size-5 flex-none text-gray-400"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
-                data-slot="icon"
+            <div className="flex items-center gap-x-1 ">
+              <button
+                type="button"
+                className="flex items-center gap-x-1 opacity-50 cursor-not-allowed text-sm/6 font-semibold text-gray-900"
+                aria-expanded="false"
               >
-                <path
-                  fillRule="evenodd"
-                  d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </button>
+                Discover
+                <svg
+                  className="size-5 flex-none text-gray-400"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  data-slot="icon"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M5.22 8.22a.75.75 0 0 1 1.06 0L10 11.94l3.72-3.72a.75.75 0 1 1 1.06 1.06l-4.25 4.25a.75.75 0 0 1-1.06 0L5.22 9.28a.75.75 0 0 1 0-1.06Z"
+                    clipRule="evenodd"
+                  />
+                </svg>
+              </button>
+              <ComingSoon width="60" style={{ marginTop: "15px" }} />
+            </div>
 
             {/* <div className="absolute top-full -left-8 z-50 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
               <div className="p-4">
@@ -254,15 +258,34 @@ export default function Header() {
             </div> */}
           </div>
 
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Blog
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Plans
-          </a>
-          <a href="#" className="text-sm/6 font-semibold text-gray-900">
-            Our Mission
-          </a>
+          <div className="flex  items-center gap-x-1">
+            <a
+              href="#"
+              className=" opacity-50 cursor-not-allowed text-sm/6 font-semibold text-gray-900"
+            >
+              Blog
+            </a>
+            <ComingSoon width="60" style={{ marginTop: "15px" }} />
+          </div>
+          <div className="flex  items-center gap-x-1">
+            <a
+              href="#"
+              className="opacity-50 cursor-not-allowed text-sm/6 font-semibold text-gray-900"
+            >
+              Premium
+            </a>
+            <ComingSoon width="60" style={{ marginTop: "15px" }} />
+          </div>
+          <div className="flex  items-center gap-x-1">
+            <a
+              href="#"
+              className="opacity-50 cursor-not-allowed text-sm/6 font-semibold text-gray-900"
+            >
+              Our Mission
+            </a>
+
+            <ComingSoon style={{ marginTop: "15px" }} width="60" />
+          </div>
         </div>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
           <a href="#" className="text-sm/6 font-semibold text-gray-900">

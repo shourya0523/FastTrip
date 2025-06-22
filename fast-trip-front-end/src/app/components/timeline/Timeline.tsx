@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Typography } from "@mui/material";
 
 type TimelineItem = {
@@ -60,6 +60,20 @@ const defaultTimelineData: TimelineItem[] = [
 const Timeline: React.FC<TimelineProps> = ({
   timelineData = defaultTimelineData,
 }) => {
+  const [visibleCount, setVisibleCount] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setVisibleCount((prev) => {
+        if (prev < timelineData.length) return prev + 1;
+        clearInterval(interval);
+        return prev;
+      });
+    }, 400); // tempo entre cada item (em ms)
+
+    return () => clearInterval(interval);
+  }, [timelineData.length]);
+
   return (
     <section className="relative py-10 px-4 max-w-screen-lg mx-auto">
       {/* Vertical line */}
@@ -68,10 +82,16 @@ const Timeline: React.FC<TimelineProps> = ({
       {timelineData.map((item, index) => {
         const isEven = index % 2 === 0;
 
+        const isVisible = index < visibleCount;
+
         return (
           <div
             key={index}
-            className="relative my-8 flex flex-col sm:flex-row sm:items-center"
+            className={`relative my-8 flex flex-col sm:flex-row sm:items-center transition-all duration-700 ease-out ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-4"
+            }`}
           >
             {/* Timeline Dot */}
             <div className="absolute top-2 sm:top-1 left-6 sm:left-1/2 sm:-translate-x-1/2 w-5 h-5 rounded-full border-4 border-[#0BC187] bg-white z-10" />
