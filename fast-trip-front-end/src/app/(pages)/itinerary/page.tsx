@@ -26,7 +26,7 @@ export default function Itinerary() {
           accessibility_requirements: true,
         });
         setFlights(data);
-      } catch (err: any) {
+      } catch (err) {
         setError(err?.message || "Erro inesperado");
       } finally {
         setLoading(false);

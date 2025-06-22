@@ -1,5 +1,5 @@
 import Image from "next/image";
-import defaultUser from "../../../../../../public/default-user.png";
+
 import lary from "../../../../../../public/lary.png";
 export default function ChatHeader() {
   return (
