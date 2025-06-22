@@ -1,8 +1,10 @@
 "use client";
 
 import { Typography } from "@mui/material";
+
 import Chat from "./components/chat-UI/Chat";
 import Space from "./components/space/Space";
+import FAQSection from "./components/faq/Faq";
 
 export default function Home() {
   return (
@@ -28,6 +30,8 @@ export default function Home() {
           </div>
         </div>
       </div>
+
+      <FAQSection />
     </section>
   );
 }
