@@ -6,6 +6,7 @@ import { FlightOffer } from "../../types/flight";
 import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
 import Airport from "../../../../public/airport.png";
 import Image from "next/image";
+import ComingSoon from "@/app/icons/ComingSoon";
 type FlightCardProps = {
   offer: FlightOffer;
 };
@@ -121,11 +122,17 @@ const FlightCard: React.FC<FlightCardProps> = ({ offer }) => {
                 <p className="font-bold">{ticket.price}</p>
                 <p className="text-xs text-gray-500">{ticket.description}</p>
               </div>
-              <button
-                className={`cursor-pointer w-32 h-11 rounded border border-[#e3e3e3] mx-2 flex justify-center items-center ${ticket.buttonBgColor} ${ticket.buttonTextColor}`}
-              >
-                Book
-              </button>
+              <div className="flex  items-center">
+                <button
+                  className={`opacity-30 cursor-not-allowed  w-32 h-11 rounded border border-[#e3e3e3] flex justify-center items-center ${ticket.buttonBgColor} ${ticket.buttonTextColor}`}
+                >
+                  Book
+                </button>
+                <ComingSoon
+                  width="80"
+                  style={{ marginTop: "60px", marginLeft: "-16px" }}
+                />
+              </div>
             </div>
           ))}
         </div>
