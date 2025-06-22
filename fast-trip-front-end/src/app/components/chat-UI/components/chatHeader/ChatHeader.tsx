@@ -1,5 +1,6 @@
 import Image from "next/image";
 import defaultUser from "../../../../../../public/default-user.png";
+import lary from "../../../../../../public/lary.png";
 export default function ChatHeader() {
   return (
     <div className="flex sm:items-center justify-between py-3 border-b-2 border-gray-200">
@@ -10,13 +11,13 @@ export default function ChatHeader() {
               <circle cx="8" cy="8" r="8" fill="currentColor" />
             </svg>
           </span>
-          <Image src={defaultUser} alt="" width={77} />
+          <Image src={lary} alt="" width={77} />
         </div>
         <div className="flex flex-col leading-tight">
           <div className="text-2xl mt-1 flex items-center">
             <span className="text-gray-700 mr-3">Lary</span>
           </div>
-          <span className="text-lg text-gray-600">Planner</span>
+          <span className="text-lg text-gray-600">Travel Buddy</span>
         </div>
       </div>
       <div className="flex items-center space-x-2">

@@ -1,6 +1,6 @@
 import Image from "next/image";
 import defaultUser from "../../../../../../public/default-user.png";
-
+import lary from "../../../../../../public/lary.png";
 interface Message {
   id: string | number;
   text: string;
@@ -36,7 +36,7 @@ export default function ChatMessages({ messages }: ChatMessagesProps) {
               </div>
             </div>
             <Image
-              src={avatarSrc || defaultUser}
+              src={!isUser ? avatarSrc || lary : avatarSrc || defaultUser}
               alt="User avatar"
               width={20}
               height={20}
