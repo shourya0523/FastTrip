@@ -1,10 +1,11 @@
 import React from "react";
 import SyncIcon from "@mui/icons-material/Sync";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
-import CardTravelIcon from "@mui/icons-material/CardTravel";
-import ConnectingAirportsIcon from "@mui/icons-material/ConnectingAirports";
-import { FlightOffer } from "../../types/flight";
 
+import { FlightOffer } from "../../types/flight";
+import AirplanemodeActiveOutlinedIcon from "@mui/icons-material/AirplanemodeActiveOutlined";
+import Airport from "../../../../public/airport.png";
+import Image from "next/image";
 type FlightCardProps = {
   offer: FlightOffer;
 };
@@ -41,30 +42,26 @@ const FlightCard: React.FC<FlightCardProps> = ({ offer }) => {
     <div className="p-10">
       <div className="max-w-full bg-white flex flex-col rounded overflow-hidden shadow-lg">
         {/* Header */}
-        <div className="flex flex-row items-baseline bg-gray-100 p-2">
-          <ConnectingAirportsIcon className="text-gray-500" />
+        <div className="flex  items-center flex-row items-baseline bg-gray-100 p-2">
+          <AirplanemodeActiveOutlinedIcon className="text-gray-500" />
           <h1 className="ml-2 uppercase font-bold text-gray-500">Departure</h1>
           <p className="ml-2 font-normal text-gray-500">{departureDate}</p>
         </div>
 
         {/* Flight Class (fixo por enquanto) */}
         <div className="mt-2 flex justify-start bg-white p-2">
-          <div className="flex mx-2 ml-6 px-2 items-baseline rounded-full bg-gray-100 p-1">
-            <svg
-              viewBox="0 0 64 64"
-              className="h-3 w-3 fill-gray-600"
-              aria-hidden="true"
-            >
-              <circle cx="32" cy="32" r="16" />
-            </svg>
+          <div className="flex items-center mx-2 ml-6 px-2 items-baseline rounded-full bg-gray-100 p-1">
+            <AirplanemodeActiveOutlinedIcon
+              className="text-gray-500"
+              style={{ fontSize: 18 }}
+            />
             <p className="ml-1 text-sm text-gray-500">Economy</p>
           </div>
         </div>
 
-        {/* Flight Info */}
         <div className="mt-2 flex flex-wrap sm:flex-nowrap justify-between mx-6">
           <div className="flex items-center p-2">
-            <CardTravelIcon className="text-gray-500" />
+            <Image src={Airport} alt="" width={50} />
             <div className="ml-2 flex flex-col">
               <p className="text-xs font-bold text-gray-500">{airline}</p>
               <p className="text-xs text-gray-500">{flight_number}</p>
@@ -125,7 +122,7 @@ const FlightCard: React.FC<FlightCardProps> = ({ offer }) => {
                 <p className="text-xs text-gray-500">{ticket.description}</p>
               </div>
               <button
-                className={`cursor-pointer w-32 h-11 rounded border mx-2 flex justify-center items-center ${ticket.buttonBgColor} ${ticket.buttonTextColor}`}
+                className={`cursor-pointer w-32 h-11 rounded border border-[#e3e3e3] mx-2 flex justify-center items-center ${ticket.buttonBgColor} ${ticket.buttonTextColor}`}
               >
                 Book
               </button>

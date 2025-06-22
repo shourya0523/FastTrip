@@ -36,6 +36,7 @@ export default function GroupButton({
       >
         {flights.map((flight, index) => (
           <Button
+            color="secondary"
             variant={selectedIndex === index ? "contained" : "outlined"}
             onClick={() => onSelect(index)}
             key={index}

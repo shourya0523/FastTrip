@@ -117,13 +117,12 @@ theme = createTheme({
       },
     },
   },
-
   palette: {
     primary: {
       main: "#0BC192", // Cor principal da marca (Teal)
     },
     secondary: {
-      main: "#1E3C31", // Cor secundária leve e acessível (Aqua)
+      main: "#333c42", // Cor secundária leve e acessível (Aqua)
     },
     text: {
       primary: "#1E3C31", // Texto escuro com ótimo contraste
