@@ -43,7 +43,8 @@ export default function ChatComponent() {
     if (
       data.follow_up_questions &&
       data.follow_up_questions.length > 0 &&
-      data.follow_up_questions?.[0] !== Message.allCollected
+      data.follow_up_questions?.[0] !== Message.allCollected &&
+      data.conversation_complete === false
     ) {
       const newBotMessages = data.follow_up_questions.map(
         (text: string, i: number) => ({
