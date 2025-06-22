@@ -3,72 +3,40 @@ import SyncIcon from "@mui/icons-material/Sync";
 import FlightTakeoffIcon from "@mui/icons-material/FlightTakeoff";
 import CardTravelIcon from "@mui/icons-material/CardTravel";
 import ConnectingAirportsIcon from "@mui/icons-material/ConnectingAirports";
-
-type TicketOption = {
-  name: string;
-  price: string;
-  description: string;
-  bgColor: string;
-  textColor: string;
-  icon: React.ReactNode;
-  buttonBgColor: string;
-  buttonTextColor: string;
-};
+import { FlightOffer } from "../../types/flight";
 
 type FlightCardProps = {
-  departureDate?: string;
-  flightClass?: string;
-  airlineName?: string;
-  airlineCode?: string;
-  baggageInfo?: string;
-  departureTime?: string;
-  departureAirportCode?: string;
-  departureAirportCity?: string;
-  departureCountry?: string;
-  arrivalTime?: string;
-  arrivalAirportCode?: string;
-  arrivalAirportCity?: string;
-  arrivalCountry?: string;
-  ticketOptions?: TicketOption[];
+  offer: FlightOffer;
 };
 
-const FlightCard: React.FC<FlightCardProps> = ({
-  departureDate = "Wednesday 18 Aug",
-  flightClass = "Economy",
-  airlineName = "Qatar Airways",
-  airlineCode = "QR1456",
-  baggageInfo = "2*23kg",
-  departureTime = "18:25",
-  departureAirportCode = "HRE",
-  departureAirportCity = "Harare",
-  departureCountry = "Zimbabwe",
-  arrivalTime = "19:25",
-  arrivalAirportCode = "LUN",
-  arrivalAirportCity = "Lusaka",
-  arrivalCountry = "Zambia",
-  ticketOptions = [
-    {
-      name: "Standard Ticket",
-      price: "$404.73",
-      description: "Price per adult",
-      bgColor: "bg-gray-400",
-      textColor: "text-white",
-      icon: <FlightTakeoffIcon />,
-      buttonBgColor: "bg-white",
-      buttonTextColor: "text-[rgb(105_114_130)]",
-    },
-    {
-      name: "Flexible Ticket",
-      price: "$605.43",
-      description: "Price per adult",
-      bgColor: "bg-[#0BC187]",
-      textColor: "text-white",
-      icon: <SyncIcon />,
-      buttonBgColor: "bg-[#0BC187]",
-      buttonTextColor: "text-white",
-    },
-  ],
-}) => {
+const FlightCard: React.FC<FlightCardProps> = ({ offer }) => {
+  const {
+    airline,
+    flight_number,
+    departure_time,
+    arrival_time,
+    origin,
+    destination,
+    price,
+    currency,
+  } = offer;
+
+  const departureDate = new Date(departure_time).toLocaleDateString(undefined, {
+    weekday: "long",
+    day: "numeric",
+    month: "short",
+  });
+
+  const departureHour = new Date(departure_time).toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
+  const arrivalHour = new Date(arrival_time).toLocaleTimeString(undefined, {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+
   return (
     <div className="p-10">
       <div className="max-w-full bg-white flex flex-col rounded overflow-hidden shadow-lg">
@@ -79,7 +47,7 @@ const FlightCard: React.FC<FlightCardProps> = ({
           <p className="ml-2 font-normal text-gray-500">{departureDate}</p>
         </div>
 
-        {/* Flight Class */}
+        {/* Flight Class (fixo por enquanto) */}
         <div className="mt-2 flex justify-start bg-white p-2">
           <div className="flex mx-2 ml-6 px-2 items-baseline rounded-full bg-gray-100 p-1">
             <svg
@@ -87,9 +55,9 @@ const FlightCard: React.FC<FlightCardProps> = ({
               className="h-3 w-3 fill-gray-600"
               aria-hidden="true"
             >
-              <path d="M43.389 38.269L29.222 61.34a1.152 1.152 0 01-1.064.615H20.99..." />
+              <circle cx="32" cy="32" r="16" />
             </svg>
-            <p className="ml-1 text-sm text-gray-500">{flightClass}</p>
+            <p className="ml-1 text-sm text-gray-500">Economy</p>
           </div>
         </div>
 
@@ -98,34 +66,53 @@ const FlightCard: React.FC<FlightCardProps> = ({
           <div className="flex items-center p-2">
             <CardTravelIcon className="text-gray-500" />
             <div className="ml-2 flex flex-col">
-              <p className="text-xs font-bold text-gray-500">{airlineName}</p>
-              <p className="text-xs text-gray-500">{airlineCode}</p>
-              <p className="text-xs text-gray-500">{baggageInfo}</p>
+              <p className="text-xs font-bold text-gray-500">{airline}</p>
+              <p className="text-xs text-gray-500">{flight_number}</p>
+              <p className="text-xs text-gray-500">1 carry-on, 1 checked</p>
             </div>
           </div>
 
           <div className="flex flex-col p-2">
-            <p className="font-bold">{departureTime}</p>
+            <p className="font-bold">{departureHour}</p>
             <p className="text-gray-500">
-              <span className="font-bold">{departureAirportCode}</span>{" "}
-              {departureAirportCity}
+              <span className="font-bold">XXX</span> {origin}
             </p>
-            <p className="text-gray-500">{departureCountry}</p>
+            <p className="text-gray-500">Country A</p>
           </div>
 
           <div className="flex flex-col p-2">
-            <p className="font-bold">{arrivalTime}</p>
+            <p className="font-bold">{arrivalHour}</p>
             <p className="text-gray-500">
-              <span className="font-bold">{arrivalAirportCode}</span>{" "}
-              {arrivalAirportCity}
+              <span className="font-bold">YYY</span> {destination}
             </p>
-            <p className="text-gray-500">{arrivalCountry}</p>
+            <p className="text-gray-500">Country B</p>
           </div>
         </div>
 
         {/* Ticket Options */}
         <div className="mt-4 bg-gray-100 flex flex-wrap md:flex-nowrap justify-between items-baseline">
-          {ticketOptions.map((ticket, i) => (
+          {[
+            {
+              name: "Standard Ticket",
+              price: `$${price.toFixed(2)} ${currency}`,
+              description: "Non-refundable",
+              bgColor: "bg-gray-400",
+              textColor: "text-white",
+              icon: <FlightTakeoffIcon />,
+              buttonBgColor: "bg-white",
+              buttonTextColor: "text-[rgb(105_114_130)]",
+            },
+            {
+              name: "Flexible Ticket",
+              price: `$${(price * 1.5).toFixed(2)} ${currency}`,
+              description: "Refundable",
+              bgColor: "bg-[#0BC187]",
+              textColor: "text-white",
+              icon: <SyncIcon />,
+              buttonBgColor: "bg-[#0BC187]",
+              buttonTextColor: "text-white",
+            },
+          ].map((ticket, i) => (
             <div key={i} className="flex mx-6 py-4 flex-wrap items-center">
               <div
                 className={`w-12 h-10 p-2 rounded-full flex justify-center items-center ${ticket.bgColor} ${ticket.textColor}`}

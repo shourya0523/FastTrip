@@ -7,9 +7,14 @@ import { Typography } from "@mui/material";
 type GroupButtonProps = {
   count: number;
   onSelect: (index: number) => void;
+  selectedIndex: number;
 };
 
-export default function GroupButton({ count, onSelect }: GroupButtonProps) {
+export default function GroupButton({
+  count,
+  onSelect,
+  selectedIndex,
+}: GroupButtonProps) {
   const flights = Array.from({ length: count }, (_, i) => `Flight ${i + 1}`);
 
   return (
@@ -30,7 +35,11 @@ export default function GroupButton({ count, onSelect }: GroupButtonProps) {
         aria-label="Large button group"
       >
         {flights.map((flight, index) => (
-          <Button onClick={() => onSelect(index)} key={index}>
+          <Button
+            variant={selectedIndex === index ? "contained" : "outlined"}
+            onClick={() => onSelect(index)}
+            key={index}
+          >
             {flight}
           </Button>
         ))}

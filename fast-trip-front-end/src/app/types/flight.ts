@@ -1,4 +1,4 @@
-type FlightOffer = {
+export type FlightOffer = {
   flight_id: string;
   airline: string;
   flight_number: string;
