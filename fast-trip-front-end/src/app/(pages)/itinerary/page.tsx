@@ -32,7 +32,7 @@ export default function Itinerary() {
       try {
         const data = await postData("flights/search", {
           origin: "Boston",
-          destination: "Brazil",
+          destination: "Nashville",
           departure_date: "2025-06-22",
           return_date: "2025-06-22",
           num_travelers: 4,
