@@ -10,7 +10,7 @@ export async function getData(endpoint: string) {
   });
 
   if (!res.ok) {
-    throw new Error("Erro ao buscar dados da API");
+    throw new Error("Error fetching data from API");
   }
 
   return res.json();
