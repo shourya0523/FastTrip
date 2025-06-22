@@ -1,7 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 import Space from "@/app/components/space/Space";
 import InsertEmoticonIcon from "@mui/icons-material/InsertEmoticon";
 import Link from "next/link";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 type ChatActionProps = {
   onSend: (message: string) => void;
@@ -13,6 +15,8 @@ export default function ChatAction({
   allCollected = false,
 }: ChatActionProps) {
   const [input, setInput] = useState("");
+  const [isListening, setIsListening] = useState(false);
+  const recognitionRef = useRef<any>(null);
 
   function handleSubmit(e?: React.FormEvent | React.MouseEvent) {
     e?.preventDefault();
@@ -27,6 +31,45 @@ export default function ChatAction({
       handleSubmit();
     }
   }
+
+  const toggleListening = () => {
+    if (!("webkitSpeechRecognition" in window)) {
+      alert("Seu navegador não suporta reconhecimento de voz.");
+      return;
+    }
+
+    if (!recognitionRef.current) {
+      const SpeechRecognition = (window as any).webkitSpeechRecognition;
+      const recognition = new SpeechRecognition();
+      recognition.lang = "en-US";
+      recognition.interimResults = false;
+      recognition.maxAlternatives = 1;
+
+      recognition.onresult = (event: any) => {
+        const text = event.results[0][0].transcript;
+        setInput((prev) => prev + " " + text);
+      };
+
+      recognition.onerror = (event: any) => {
+        console.error("Erro de voz:", event.error);
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognitionRef.current = recognition;
+    }
+
+    if (isListening) {
+      recognitionRef.current.stop();
+      setIsListening(false);
+    } else {
+      recognitionRef.current.start();
+      setIsListening(true);
+    }
+  };
 
   return (
     <div className="border-t-2 border-gray-200 px-4 pt-4 mb-2 sm:mb-0">
@@ -47,21 +90,24 @@ export default function ChatAction({
             <span className="absolute inset-y-0 flex items-center">
               <button
                 type="button"
-                className=" cursor-pointer inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-gray-500 hover:bg-gray-300 focus:outline-none"
+                onClick={toggleListening}
+                className={`cursor-pointer inline-flex items-center justify-center rounded-full h-12 w-12 transition duration-500 ease-in-out text-white ${
+                  isListening ? "bg-red-500" : "bg-gray-500"
+                } focus:outline-none`}
+                title="Click to talk"
               >
-                {/* Ícone */}
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
-                  className="h-6 w-6 text-gray-600"
+                  className="h-6 w-6"
                 >
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"
+                    d="M12 1a3 3 0 00-3 3v6a3 3 0 006 0V4a3 3 0 00-3-3zm0 12a7 7 0 01-7-7m14 0a7 7 0 01-7 7v4m0 0H8m4 0h4"
                   />
                 </svg>
               </button>
@@ -72,17 +118,15 @@ export default function ChatAction({
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
               type="text"
-              placeholder="Write your message!"
-              className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-12 bg-gray-200 rounded-md py-3"
+              placeholder="Write or Talk!"
+              className="w-full focus:outline-none focus:placeholder-gray-400 text-gray-600 placeholder-gray-600 pl-15 bg-gray-200 rounded-md py-3"
             />
 
             <div className="absolute right-0 items-center inset-y-0  sm:flex">
-              {/* Outros botões */}
-
               <button
                 onClick={handleSubmit}
                 type="button"
-                className=" cursor-pointer inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-[#0BC187]  hover:opacity-70 focus:outline-none"
+                className="cursor-pointer inline-flex items-center justify-center rounded-lg px-4 py-3 transition duration-500 ease-in-out text-white bg-[#0BC187] hover:opacity-70 focus:outline-none"
               >
                 <span className="font-bold">Send</span>
                 <svg
