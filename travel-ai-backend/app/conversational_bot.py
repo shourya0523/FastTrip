@@ -55,7 +55,7 @@ def call_gemini_update_state(state, user_message, conversation_history=[]):
     },
     "required": true
   },
-  "number_of_travelers": {"type": "integer", "minimum": 1, "required": true},
+  "number_of_travelers": {"type": "integer", "minimum": 1, "required": true, ONLY VALID CITY NAMES},
   "trip_type": {"type": "string", "enum": ["Leisure", "Business", "Adventure", "Cultural", "Family", "Romantic"], "required": true},
   "budget": {"type": "string", "required": true, "enum": [economy, mid-range, luxury"},
   "interests": {"type": "array", "items": {"type": "string"}, "required": true, "minItems": 1},
@@ -69,7 +69,9 @@ def call_gemini_update_state(state, user_message, conversation_history=[]):
     
     prompt = f"""
     You are a friendly travel planner having a casual conversation with a user. Your goal is to help them plan their perfect trip while keeping the chat comfortable and natural.
-    Once all details are filled, you MUST end the chat.
+    
+    IMPORTANT: Only mark the conversation as complete when ALL required fields are filled with valid values.
+    
     The user's trip info is stored in a JSON object. Here is the schema:
     {schema}
 
@@ -81,31 +83,36 @@ def call_gemini_update_state(state, user_message, conversation_history=[]):
     YOUR JOB:
     1. Update the trip info with what you learn from the user
     2. Focus on the core trip details first (where, when, who, what)
-    3. Ask ONE natural follow-up question about the one or two important missing details, unless all details are filled.
+    3. Ask ONE natural follow-up question about missing details
     4. Be conversational - sound like a helpful friend, not a form
-    5. Do not add your own fields, unless a very significant note exists. Then add additional notes.
-    8. Only have valid cities for the destination. If the user says a city that is not valid, ask them to rephrase.
+    5. Only set next_question to empty string "" when ALL fields are completely filled
+    6. Only have valid cities for the destination
 
-    PRIORITY FOR QUESTIONS:
-    1. Destination and dates (where and when)
-    2. Trip type and number of travelers (what kind of trip and who's going)
-    3. Interests and budget (what they want to do and spend)
-    4. Other preferences (pace, accommodations, special needs)
+    REQUIRED FIELDS THAT MUST BE FILLED:
+    - starting_location (must be a valid city/airport)
+    - destination (must be a valid city/airport)
+    - dates_of_travel.start_date (YYYY-MM-DD format)
+    - dates_of_travel.end_date (YYYY-MM-DD format)
+    - number_of_travelers (positive integer)
+    - trip_type (one of: Leisure, Business, Adventure, Cultural, Family, Romantic)
+    - budget (one of: economy, mid-range, luxury)
+    - interests (array with at least one item)
+    - how_packed_trip (one of: Relaxed, Moderate, Busy)
+    - ok_with_walking (true or false)
+    - age_group_of_travelers (descriptive string)
+    - accessibility_needs (string, can be "none" if no needs)
+    - dietary_needs (string, can be "none" if no needs)
 
     RESPONSE (JSON ONLY):
     {{
-      
       "updated_json": {{UPDATED_STATE}},
-      
       "missing_fields": ["MOST_IMPORTANT_MISSING_FIELDS_FIRST"],
-      
-      "next_question": "ONE_NATURAL_CONVERSATIONAL_QUESTION"
-    
+      "next_question": "ONE_NATURAL_CONVERSATIONAL_QUESTION_OR_EMPTY_STRING_IF_ALL_COMPLETE"
     }}
     """
     if GEMINI_AVAILABLE and GEMINI_API_KEY:
         genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel("gemini-1.5-flash")
+        model = genai.GenerativeModel("gemini-2.5-flash")  # Updated to latest model
         response = model.generate_content(prompt)
         try:
             import re
@@ -133,6 +140,74 @@ def extract_flight_parameters_from_state(state):
     Extract flight search parameters from the conversation state using Gemini.
     Maps the collected travel information to FlightSearchRequest format.
     """
+    from app.flights.serpapi_adapter import SerpApiAdapter
+    
+    print(f"[DEBUG] Extracting from state: {json.dumps(state, indent=2)}")
+    
+    # Initialize airport code mapper
+    serpapi_adapter = SerpApiAdapter()
+    
+    # Extract and convert city names to airport codes
+    origin_city = state.get("starting_location")
+    destination_city = state.get("destination")
+    
+    origin_code = serpapi_adapter.get_airport_code(origin_city) if origin_city else None
+    destination_code = serpapi_adapter.get_airport_code(destination_city) if destination_city else None
+    
+    # Budget mapping function
+    def normalize_budget(budget_value):
+        """Convert various budget terms to accepted enum values"""
+        if not budget_value:
+            return "medium"
+        
+        budget_str = str(budget_value).lower().strip()
+        
+        # Map common budget terms to enum values
+        budget_mapping = {
+            # Low budget terms
+            "low": "low",
+            "cheap": "low", 
+            "budget": "low",
+            "economy": "low",
+            "basic": "low",
+            "minimal": "low",
+            
+            # Medium budget terms
+            "medium": "medium",
+            "moderate": "medium",
+            "standard": "medium",
+            "regular": "medium",
+            "average": "medium",
+            
+            # High budget terms
+            "high": "high",
+            "expensive": "high",
+            "premium": "high",
+            "luxury": "high",
+            "first-class": "high",
+            "business": "high"
+        }
+        
+        return budget_mapping.get(budget_str, "medium")
+    
+    manual_params = {
+        "origin": origin_code,
+        "destination": destination_code,
+        "departure_date": state.get("dates_of_travel", {}).get("start_date"),
+        "return_date": state.get("dates_of_travel", {}).get("end_date"),
+        "num_travelers": state.get("number_of_travelers", 1),
+        "budget": normalize_budget(state.get("budget")),
+        "accessibility_requirements": bool(state.get("accessibility_needs"))
+    }
+    
+    print(f"[DEBUG] Manual extraction result: {json.dumps(manual_params, indent=2)}")
+    print(f"[DEBUG] Converted {origin_city} -> {origin_code}, {destination_city} -> {destination_code}")
+    print(f"[DEBUG] Budget normalized: {state.get('budget')} -> {manual_params['budget']}")
+    
+    if manual_params.get("origin") and manual_params.get("destination"):
+        return manual_params
+
+    # Otherwise try Gemini extraction
     prompt = f"""
     You are a travel data processor. Extract flight search parameters from the collected travel information.
     
@@ -144,8 +219,10 @@ def extract_flight_parameters_from_state(state):
     - departure_date: start_date from dates_of_travel (YYYY-MM-DD format)
     - return_date: end_date from dates_of_travel (YYYY-MM-DD format)
     - num_travelers: number_of_travelers (integer)
-    - budget: map budget to "low", "medium", or "high"
+    - budget: map budget to EXACTLY "low", "medium", or "high" (convert economy->low, premium->high, etc.)
     - accessibility_requirements: true if accessibility_needs mentions any requirements, false otherwise
+    
+    IMPORTANT: Budget must be exactly "low", "medium", or "high" - no other values allowed!
     
     RESPONSE (JSON ONLY):
     {{
@@ -160,28 +237,53 @@ def extract_flight_parameters_from_state(state):
     """
     
     if GEMINI_AVAILABLE and GEMINI_API_KEY:
-        genai.configure(api_key=GEMINI_API_KEY)
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(prompt)
         try:
+            genai.configure(api_key=GEMINI_API_KEY)
+            model = genai.GenerativeModel("gemini-2.5-flash")
+            response = model.generate_content(prompt)
+            print(f"[DEBUG] Gemini response: {response.text}")
+            
             import re
             match = re.search(r'\{[\s\S]*\}', response.text)
             if match:
                 flight_params = json.loads(match.group(0))
+                # Ensure budget is normalized even from Gemini response
+                if 'budget' in flight_params:
+                    flight_params['budget'] = normalize_budget(flight_params['budget'])
+                print(f"[DEBUG] Gemini extraction result: {json.dumps(flight_params, indent=2)}")
                 return flight_params
         except Exception as e:
             print(f"[Flight extraction error]: {e}")
-            return None
-    else:
-        # Mock extraction for testing
-        return {
-            "origin": state.get("starting_location", "Unknown"),
-            "destination": state.get("destination", "Unknown"),
-            "departure_date": state.get("dates_of_travel", {}).get("start_date", "2024-01-01"),
-            "return_date": state.get("dates_of_travel", {}).get("end_date", "2024-01-07"),
-            "num_travelers": state.get("number_of_travelers", 1),
-            "budget": "medium",
-            "accessibility_requirements": bool(state.get("accessibility_needs"))
-        }
+            # Fall back to manual extraction
+            return manual_params if manual_params.get("origin") and manual_params.get("destination") else None
     
-    return None
+    # If Gemini not available, return manual extraction or error
+    if manual_params.get("origin") and manual_params.get("destination"):
+        return manual_params
+    else:
+        return {
+            "error": "Flight extraction not available. Please try again later."
+        }
+
+
+def is_conversation_complete(state):
+    """
+    Check if all required fields are properly filled in the conversation state.
+    """
+    for field in REQUIRED_FIELDS:
+        if field == "dates_of_travel":
+            # Special handling for nested dates object
+            dates = state.get(field, {})
+            if not dates or not dates.get("start_date") or not dates.get("end_date"):
+                return False
+        elif field == "interests":
+            # Special handling for interests array
+            interests = state.get(field, [])
+            if not interests or len(interests) == 0:
+                return False
+        else:
+            # Regular field validation
+            value = state.get(field)
+            if value is None or value == "" or (isinstance(value, str) and value.strip() == ""):
+                return False
+    return True

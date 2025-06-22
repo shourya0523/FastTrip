@@ -24,7 +24,7 @@ class Settings:
     SERPAPI_KEY = os.getenv("SERPAPI_KEY", "")
     
     # Use real API if key is available, otherwise mock
-    USE_MOCK_DATA = not bool(SERPAPI_KEY)
+    USE_MOCK_DATA = os.getenv("USE_MOCK_DATA", "false").lower() == "true"
 
 
 # Create settings instance
