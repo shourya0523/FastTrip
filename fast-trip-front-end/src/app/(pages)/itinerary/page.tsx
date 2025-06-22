@@ -1,7 +1,12 @@
 "use client";
+
+import { useRef } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas-pro";
+
 import FlightCard from "@/app/components/flightCard/FlightCard";
 import Timeline from "@/app/components/timeline/Timeline";
-import GoogleMap from "@/app/components/googleMaps/GoogleMaps";
+
 import { useEffect, useState } from "react";
 import { postData } from "@/app/lib/api";
 import GroupButton from "@/app/components/groupButton/groupButton";
@@ -18,6 +23,9 @@ export default function Itinerary() {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+
+  // Ref para capturar timeline
+  const timelineRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     async function fetchFlight() {
@@ -42,6 +50,38 @@ export default function Itinerary() {
     fetchFlight();
   }, []);
 
+  const handleDownloadPdf = async () => {
+    if (!timelineRef.current) return;
+
+    const element = timelineRef.current;
+    const canvas = await html2canvas(element, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = pdf.internal.pageSize.getHeight();
+
+    // Dimensões do canvas em mm
+    const imgWidth = pdfWidth;
+    const imgHeight = (canvas.height * pdfWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    // Adiciona a primeira página
+    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+    heightLeft -= pdfHeight;
+
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
+      heightLeft -= pdfHeight;
+    }
+
+    pdf.save("itinerary.pdf");
+  };
+
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
@@ -63,7 +103,7 @@ export default function Itinerary() {
 
   return (
     <>
-      <div className="lg:w-[600px] text-center m-auto   flex flex-col justify-center items-center ">
+      <div className="lg:w-[600px] text-center m-auto flex flex-col justify-center items-center ">
         <Typography variant="hero" lineHeight="50px" fontWeight="bold">
           Your Accessible Itinerary is Ready —{" "}
           <span className="text-[#0BC192]">Enjoy the Journey</span>
@@ -80,7 +120,10 @@ export default function Itinerary() {
         *Save your itinerary for easy access during your trip.
       </Typography>
       <Space bottom={2} />
-      <DownloadButton />
+
+      {/* Botão de download PDF */}
+      <DownloadButton onClick={handleDownloadPdf} />
+
       <Space bottom={10} />
       <Divider />
       <Space bottom={10} />
@@ -114,7 +157,12 @@ export default function Itinerary() {
         *Your Personalized Itinerary
       </Typography>
       <Space bottom={10} />
-      <Timeline itinerary={trip_itinerary.itinerary} />
+
+      {/* Adiciona ref aqui */}
+      <div ref={timelineRef}>
+        <Timeline itinerary={trip_itinerary.itinerary} />
+      </div>
+
       <Space bottom={10} />
       <Typography
         className="flex justify-center"
@@ -129,7 +177,6 @@ export default function Itinerary() {
       </Typography>
       <Space bottom={10} />
       <ItineraryMap itinerary={trip_itinerary.itinerary} />
-      {/* <GoogleMap /> */}
     </>
   );
 }

@@ -2,16 +2,21 @@
 
 import { useState } from "react";
 
-export default function DownloadButton() {
+type DownloadButtonProps = {
+  onClick?: () => void;
+};
+
+export default function DownloadButton({ onClick }: DownloadButtonProps) {
   const [hovered, setHovered] = useState(false);
 
   return (
-    <div className="grid place-content-center">
-      <a
-        href="#"
-        className="relative overflow-hidden px-8 py-3 inline-flex items-center justify-center text-[#0BC192] rounded-lg bg-transparent shadow-[inset_0_0_0_1px_#0BC192] transition-transform"
+    <div className="grid place-content-center ">
+      <button
+        type="button"
+        className="cursor-pointer relative overflow-hidden px-8 py-3 inline-flex items-center justify-center text-[#0BC192] rounded-lg bg-transparent shadow-[inset_0_0_0_1px_#0BC192] transition-transform"
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
+        onClick={onClick}
       >
         <span
           className="relative z-10 flex items-center gap-4 text-lg transition-colors duration-300"
@@ -41,7 +46,7 @@ export default function DownloadButton() {
               : "scale-0 translate-y-[140%]"
           }`}
         />
-      </a>
+      </button>
     </div>
   );
 }
