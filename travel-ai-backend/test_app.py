@@ -175,7 +175,12 @@ def test_chat_endpoint_flight_parameter_extraction(client, monkeypatch):
     
     # Check that conversation is marked as complete
     assert data["conversation_complete"] is True
-    assert data["follow_up_questions"] == []
+    # In the test_chat_endpoint_flight_parameter_extraction function, change:
+    # assert data["follow_up_questions"] == []
+    # To:
+    assert len(data["follow_up_questions"]) == 1
+    assert "found" in data["follow_up_questions"][0].lower()
+    assert "flight" in data["follow_up_questions"][0].lower()
     
     # Check that flight parameters are extracted and returned
     assert "flight_parameters" in data
@@ -324,3 +329,135 @@ def test_session_stores_flight_parameters(client, monkeypatch):
     assert stored_session["flight_parameters"]["origin"] == "Chicago"
     assert stored_session["flight_parameters"]["destination"] == "Miami"
     assert stored_session["conversation_complete"] is True
+
+
+def test_budget_normalization_in_flight_extraction():
+    """
+    Test that various budget terms are properly normalized to accepted enum values
+    """
+    from app.conversational_bot import extract_flight_parameters_from_state
+    
+    # Test different budget terms
+    test_cases = [
+        ("economy", "low"),
+        ("budget", "low"), 
+        ("cheap", "low"),
+        ("low", "low"),
+        ("medium", "medium"),
+        ("standard", "medium"),
+        ("moderate", "medium"),
+        ("high", "high"),
+        ("premium", "high"),
+        ("luxury", "high"),
+        ("business", "high"),
+        ("unknown_term", "medium"),  # Should default to medium
+        (None, "medium"),  # Should default to medium
+        ("", "medium")  # Should default to medium
+    ]
+    
+    for input_budget, expected_output in test_cases:
+        test_state = {
+            "starting_location": "San Francisco",
+            "destination": "New York",
+            "dates_of_travel": {
+                "start_date": "2024-07-15",
+                "end_date": "2024-07-22"
+            },
+            "number_of_travelers": 1,
+            "budget": input_budget,
+            "accessibility_needs": None
+        }
+        
+        flight_params = extract_flight_parameters_from_state(test_state)
+        
+        assert flight_params["budget"] == expected_output, f"Budget '{input_budget}' should map to '{expected_output}', got '{flight_params['budget']}'"
+        
+        print(f"✅ Budget mapping test passed: '{input_budget}' -> '{expected_output}'")
+    
+    print("✅ All budget normalization tests passed!")
+
+
+def test_flight_search_with_economy_budget(client, monkeypatch):
+    """
+    Integration test: Ensure 'economy' budget doesn't cause validation errors
+    """
+    stored_sessions = {}
+    
+    def mock_update_state_with_economy_budget(state, message, history=None):
+        # Changed parameter name back to 'history' to match how it's called
+        return {
+            "starting_location": "Los Angeles",
+            "destination": "Chicago",
+            "dates_of_travel": {
+                "start_date": "2024-08-15",
+                "end_date": "2024-08-22"
+            },
+            "number_of_travelers": 1,
+            "budget": "economy",  # This should be converted to "low"
+            "accessibility_needs": None
+        }, [], "Perfect! I have all the information I need."
+    
+    def mock_get_session(session_id):
+        return stored_sessions.get(session_id, {"state": {}, "conversation_complete": False})
+    
+    def mock_update_session(session, session_id=None):
+        if session_id is None:
+            session_id = "test_economy_budget"
+        stored_sessions[session_id] = session
+        return session_id
+    
+    async def mock_flight_search(request):
+        from app.models.travel_models import FlightSearchResponse, FlightOffer
+        from datetime import datetime
+        
+        # Verify budget was normalized correctly
+        assert request.budget.value == "low", f"Expected budget 'low', got '{request.budget.value}'"
+        
+        mock_offer = FlightOffer(
+            flight_id="ECONOMY_TEST",
+            airline="Budget Airlines",
+            flight_number="BA123",
+            origin="LAX",
+            destination="ORD",
+            departure_time=datetime(2024, 8, 15, 6, 0),
+            arrival_time=datetime(2024, 8, 15, 12, 0),
+            duration_minutes=240,
+            price=199.0,  # Low price for economy budget
+            accessibility_score=7.0,
+            accessibility_features=["Basic assistance"],
+            is_direct=True,
+            stops=0
+        )
+        
+        return FlightSearchResponse(
+            search_id="economy_test_123",
+            offers=[mock_offer],
+            total_results=1,
+            search_summary={"message": "Found 1 budget flight"}
+        )
+    
+    monkeypatch.setattr("app.api.chat_routes.call_gemini_update_state", mock_update_state_with_economy_budget)
+    monkeypatch.setattr("app.api.chat_routes.get_session", mock_get_session)
+    monkeypatch.setattr("app.api.chat_routes.update_session", mock_update_session)
+    monkeypatch.setattr("app.flights.flight_search.FlightSearchService.search_flights", mock_flight_search)
+    
+    request = {"message": "I need an economy flight from LA to Chicago"}
+    response = client.post("/api/v1/chat/chat", json=request)
+    
+    # Debug output if test fails
+    if response.status_code != 200:
+        print(f"Response status: {response.status_code}")
+        print(f"Response text: {response.text}")
+        try:
+            print(f"Response JSON: {response.json()}")
+        except:
+            print("Could not parse response as JSON")
+    
+    # Should not get validation error
+    assert response.status_code == 200
+    
+    # Verify conversation is complete and flight results are present
+    response_data = response.json()
+    assert response_data["conversation_complete"] == True
+    assert "flight_results" in response_data
+    assert len(response_data["flight_results"]["offers"]) > 0

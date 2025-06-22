@@ -10,6 +10,49 @@ class SerpApiAdapter:
     
     def __init__(self):
         self.api_key = settings.SERPAPI_KEY
+        self._airport_mapping = None
+    
+    def _load_airport_mapping(self):
+        """Load airport code mapping from CSV"""
+        if self._airport_mapping is None:
+            import os
+            csv_path = os.path.join(os.path.dirname(__file__), 'airport_codes.csv')
+            try:
+                df = pd.read_csv(csv_path, names=['iata_code', 'city'])
+                
+                # Create mapping, but prioritize 3-letter IATA codes over others
+                mapping = {}
+                for _, row in df.iterrows():
+                    city = row['city'].lower()
+                    code = row['iata_code'].upper()
+                    
+                    # If city not in mapping, or current code is 3 letters and existing isn't
+                    if (city not in mapping or 
+                        (len(code) == 3 and len(mapping[city]) != 3)):
+                        mapping[city] = code
+                
+                self._airport_mapping = mapping
+            except Exception as e:
+                print(f"Warning: Could not load airport mapping: {e}")
+                self._airport_mapping = {}
+        return self._airport_mapping
+
+    def get_airport_code(self, city_name: str) -> str:
+        """Get airport code for a city"""
+        mapping = self._load_airport_mapping()
+        
+        # Try exact match first
+        city_lower = city_name.lower().strip()
+        if city_lower in mapping:
+            return mapping[city_lower]
+        
+        # Try partial matches for cities with multiple airports
+        for city, code in mapping.items():
+            if city_lower in city or city in city_lower:
+                return code
+        
+        # If no match found, return the original (might already be an airport code)
+        return city_name.upper()
     
     async def search_flights(self, request: FlightSearchRequest) -> List[Dict[str, Any]]:
         """Search flights via SerpAPI (always round trip)"""
@@ -116,11 +159,3 @@ class SerpApiAdapter:
             return hours * 60 + minutes
         except:
             return 0
-    
-    async def get_airport_code(self, city_name: str) -> str:
-        """Get airport code for a city"""
-        airports = {
-            pd.read_csv('airport_codes.csv')['city'].str.lower(): pd.read_csv('airport_codes.csv')['iata_code'].str.upper()
-        }
-        
-        return airports.get(city_name.lower(), city_name.upper()) 
