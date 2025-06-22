@@ -9,6 +9,7 @@ import { FlightsResponse } from "@/app/types/flight";
 import { Typography } from "@mui/material";
 import Space from "@/app/components/space/Space";
 import Divider from "@mui/material/Divider";
+import DownloadButton from "@/app/components/download-button/DownloadButton";
 
 export default function Itinerary() {
   const [flights, setFlights] = useState<FlightsResponse | null>(null);
@@ -73,7 +74,15 @@ export default function Itinerary() {
       <Space bottom={10} />
       <Divider />
       <Space bottom={10} />
+      <Typography className="flex justify-center" variant="overline">
+        *Save your itinerary for easy access during your trip.
+      </Typography>
+      <Space bottom={2} />
+      <DownloadButton />
 
+      <Space bottom={10} />
+      <Divider />
+      <Space bottom={10} />
       <Typography
         className="flex justify-center"
         variant="title"
@@ -92,7 +101,6 @@ export default function Itinerary() {
           <FlightCard offer={flights.offers[selectedIndex]} />
         </div>
       )}
-
       <Typography
         className="flex justify-center"
         variant="title"
