@@ -15,6 +15,7 @@ class ChatResponse(BaseModel):
     extracted_params: Dict[str, Any]
     follow_up_questions: List[str]
     session_id: str
+    conversation_complete: bool = False
 
 @router.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: ChatRequest):
@@ -39,12 +40,18 @@ async def chat_endpoint(request: ChatRequest):
 
         session["state"] = updated_state
         session["history"].append(request.message)
+        
+        conversation_complete = not next_question
+        if conversation_complete:
+            session["conversation_complete"] = True
+
         new_session_id = update_session(session, session_id)
 
         return ChatResponse(
             extracted_params=updated_state,
             follow_up_questions=[next_question] if next_question else [],
-            session_id=new_session_id
+            session_id=new_session_id,
+            conversation_complete=conversation_complete
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
