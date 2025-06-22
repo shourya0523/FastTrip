@@ -38,6 +38,7 @@ TARGET JSON STRUCTURE:
  "starting_location": "",
  "destination": "",
  "accessibility_needs": "",
+ "accessibility": (true or false),
  "dietary_needs": "",
  "age_group_of_travelers": "",
  "interests": [],
@@ -209,3 +210,8 @@ User: Something balanced, not too rushed
     
     result = parse_conversation_and_generate_json(sample_conversation, "test_extraction.json")
     return result
+
+# if __name__ == "__main__":
+#     with open("conversation.txt", "r", encoding="utf-8") as file:
+#         conversation_text = file.read()
+#     parse_conversation_and_generate_json(conversation_text, "trip_details.json")

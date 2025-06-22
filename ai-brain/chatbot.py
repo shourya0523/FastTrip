@@ -1,7 +1,8 @@
 from google import genai
 from google.genai import types
-from gen_json import parse_conversation_and_generate_json
-import json
+from datetime import date
+
+today = date.today()
 
 def generate():
     client = genai.Client(
@@ -13,7 +14,7 @@ def generate():
     system_prompt = """You are a travel agent chatbot and your job is to get the following information from the user about the trip they are planning.
 Ask questions progressively until you have information to fill this JSON file:
 {
- "budget": "",
+ "budget": "" (convert to one of: budget, mid-range, luxury, expensive),
  "starting_location": "",
  "destination": "",
  "accessibility_needs": "",
@@ -26,7 +27,7 @@ Ask questions progressively until you have information to fill this JSON file:
  "start_date": "",
  "end_date": ""
  },
- "trip_type": "",
+ "trip_type": "" (Convert to one of: business, family, romantic, friends, adventure, relaxation, cultural),
  "number_of_travelers": null
 }
 
@@ -34,7 +35,10 @@ Ask one or two questions at a time to avoid overwhelming the user but be quick a
 quickly as possible. Be friendly, conversational, and helpful. 
 Once you have gathered all the information, let the user know that you have everything you need and summarize 
 their trip preferences. Once you have all the infromation just print out the "CONVERSATION COMPLETE! NOW 
-PROCESSING..." """
+PROCESSING..." 
+
+Note: Any date mentioned is assumed to be after {today}
+"""
 
     msg1_text1 = types.Part.from_text(text=system_prompt)
     model = "gemini-2.5-flash"
@@ -161,7 +165,3 @@ PROCESSING..." """
     
     print("\nFull conversation saved!")
     return full_conversation_text
-
-if __name__ == "__main__":
-    conversation = generate()
-    parse_conversation_and_generate_json(conversation)

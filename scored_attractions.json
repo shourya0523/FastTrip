@@ -1,0 +1,248 @@
+{
+  "trip_details": {
+    "budget": "5000 for all of us, budget-friendly",
+    "starting_location": "Boston",
+    "destination": "Nashville",
+    "accessibility_needs": "one of us has a walker",
+    "accessibility": true,
+    "dietary_needs": "vegetarian",
+    "age_group_of_travelers": "40s",
+    "interests": [
+      "live music",
+      "outdoor activities",
+      "history",
+      "culture"
+    ],
+    "how_packed_trip": "packed",
+    "ok_with_walking": false,
+    "dates_of_travel": {
+      "start_date": "2024-08-08",
+      "end_date": "2024-08-15"
+    },
+    "trip_type": "friends' trip",
+    "number_of_travelers": 4
+  },
+  "scored_at": "2025-06-22T04:45:07.331010",
+  "attractions": [
+    {
+      "name": "Grand Ole Opry",
+      "address": "600 Opry Mills Dr, Nashville",
+      "place_id": "ChIJVSpg989pZIgRdex84bjnfic",
+      "score": 100,
+      "reasoning": "The Grand Ole Opry scores perfectly due to its explicit wheelchair accessibility, making it ideal for a traveler using a walker with minimal walking. It strongly aligns with the group's interests in live music, history, and culture. The seated performance offers a relaxed pace suitable for the group, is excellent for friends in their 40s, and provides great value within the specified budget.",
+      "location": {
+        "lat": 36.2068571,
+        "lng": -86.69210849999999
+      }
+    },
+    {
+      "name": "Ryman Auditorium",
+      "address": "116 5th Ave N, Nashville",
+      "place_id": "ChIJletJO1lmZIgRq0UiSZV5AGM",
+      "score": 100,
+      "reasoning": "Ryman Auditorium is an excellent fit for this group trip. It explicitly offers wheelchair accessible entrances, crucial for the traveler using a walker and ensuring minimal walking. As a historic music venue, it perfectly aligns with the group's interests in live music, history, and culture. The tours can be enjoyed at a relaxed pace, accommodating the group's preference. It's highly suitable for friends in their 40s, offering a shared cultural experience. With a 'price_level': 2, it's budget-friendly for the group and offers great value for its iconic status and immersive experience.",
+      "location": {
+        "lat": 36.1612481,
+        "lng": -86.7784714
+      }
+    },
+    {
+      "name": "Country music hall of fame rotunda",
+      "address": "401 Demonbreun St, Nashville",
+      "place_id": "ChIJQVcmozFnZIgRi8CiPZVgXlI",
+      "score": 100,
+      "reasoning": "The Country Music Hall of Fame, including the Rotunda, is highly accessible with wheelchair-friendly entrances and an interior designed for easy navigation, crucial for a traveler with a walker. It perfectly aligns with the group's interests in music, history, and culture. The museum allows for a self-paced, relaxed experience, ideal for a group not wanting extensive walking. It is an excellent attraction for a group of friends in their 40s, offering a shared cultural experience. The admission cost is very budget-friendly within the overall trip budget, providing excellent value.",
+      "location": {
+        "lat": 36.1582613,
+        "lng": -86.7761189
+      }
+    },
+    {
+      "name": "Johnny Cash Museum",
+      "address": "119 3rd Ave S, Nashville",
+      "place_id": "ChIJVVVVVYVvZIgR9SLLnlliRbA",
+      "score": 98,
+      "reasoning": "The Johnny Cash Museum scores highly due to its strong alignment with the group's interests in music, history, and culture. Crucially, it has a wheelchair-accessible entrance, making it ideal for the traveler with a walker and accommodating the preference for not much walking, as museum visits are typically self-paced. It's a budget-friendly option for the group, offering good value as indicated by its high user ratings, and is a suitable activity for a friends' trip in their 40s.",
+      "location": {
+        "lat": 36.1609385,
+        "lng": -86.77575709999999
+      }
+    },
+    {
+      "name": "Legends of Country Music Museum and Nashville Souvenirs",
+      "address": "2613A McGavock Pk, Nashville",
+      "place_id": "ChIJC71ijNVpZIgRWj3unqlFnjI",
+      "score": 98,
+      "reasoning": "This attraction scores highly due to its confirmed wheelchair accessible entrance, directly meeting the essential accessibility need. It perfectly aligns with the group's interest in music history (country music). As a museum, its self-paced nature is ideal for a traveler using a walker and a group not wanting much walking, allowing for a relaxed experience. It's a fitting choice for a friends' trip in their 40s, and assuming typical museum pricing, offers good value for a budget-friendly trip.",
+      "location": {
+        "lat": 36.2175638,
+        "lng": -86.69818629999999
+      }
+    },
+    {
+      "name": "Musicians Hall of Fame and Museum",
+      "address": "401 Gay St, Nashville",
+      "place_id": "ChIJL7O-21dmZIgRaAWY7QV7RIo",
+      "score": 96,
+      "reasoning": "Excellent fit for accessibility with a wheelchair-accessible entrance and a relaxed, self-paced museum environment, ideal for limited walking. Highly relevant to the group's interests in music and history. Good for a group of friends and likely offers good value, fitting a budget-friendly trip. While the interest is 'live music,' the museum offers music history, which is closely related.",
+      "location": {
+        "lat": 36.1678327,
+        "lng": -86.7823859
+      }
+    },
+    {
+      "name": "Nashville Music Garden",
+      "address": "400-498 Demonbreun St, Nashville",
+      "place_id": "ChIJNx_vG1xmZIgRRkKXcCasoQk",
+      "score": 94,
+      "reasoning": "The Nashville Music Garden scores highly due to its strong alignment with key trip criteria. As a garden, it's inherently relaxed, catering well to the 'not much walking' preference and likely offering wheelchair accessibility (confirmed entrance accessibility). Its name and location in Nashville make it highly relevant for the 'music' interest. It's a great group activity for friends in their 40s and, as a public garden, is expected to offer excellent value (likely free), fitting the budget-friendly requirement. While August weather could be warm, the attraction's nature as a garden implies a less demanding experience.",
+      "location": {
+        "lat": 36.15904,
+        "lng": -86.77642499999999
+      }
+    },
+    {
+      "name": "Walk of Fame Park",
+      "address": "121 4th Ave S, Nashville",
+      "place_id": "ChIJ0RjxHVxmZIgRswEefJUstpw",
+      "score": 93,
+      "reasoning": "Walk of Fame Park scores highly due to its excellent accessibility (wheelchair accessible entrance and flat terrain), making it suitable for a traveler with a walker and a group not keen on much walking. It directly aligns with the group's interest in music and history, celebrating Nashville's musical heritage. As a public park, it offers a relaxed, self-paced experience and is completely free, providing exceptional value. While it doesn't guarantee live music, its focus on musicians strongly connects to that interest, and it's well-suited for a friends' group of any adult age.",
+      "location": {
+        "lat": 36.1592226,
+        "lng": -86.7769529
+      }
+    },
+    {
+      "name": "General Jackson Showboat",
+      "address": "2812 Opryland Dr, Nashville",
+      "place_id": "ChIJ_6fb7M5pZIgRKUwtyfFQ4FM",
+      "score": 93,
+      "reasoning": "The General Jackson Showboat scores highly due to its excellent accessibility (wheelchair accessible entrance, minimal walking required on board), which is crucial for the traveler using a walker. It perfectly aligns with the group's interest in live music and offers a relaxed pace that is not demanding or rushed. It's a great group activity for friends in their 40s, providing a cultural experience. While potentially on the higher side for a single activity given a 'budget-friendly' overall trip, it offers good value by including dinner and entertainment. Vegetarian options are generally available upon request.",
+      "location": {
+        "lat": 36.2037358,
+        "lng": -86.69516639999999
+      }
+    },
+    {
+      "name": "2nd Avenue Historic District",
+      "address": "2nd Ave N, Nashville",
+      "place_id": "ChIJXcMkrbtnZIgRAFZ2jn24jTY",
+      "score": 89,
+      "reasoning": "The 2nd Avenue Historic District aligns very well with the group's interests in live music, history, and culture, being a central hub in Nashville. It offers excellent value as a free-to-explore area and is highly group-friendly for friends in their 40s. While Google Places confirms a 'wheelchair_accessible_entrance', the nature of a historic district implies walking, which somewhat conflicts with the 'not much walking' preference, though it can be explored at a relaxed pace with options for rest. Its proximity to music venues makes it highly relevant for live music.",
+      "location": {
+        "lat": 36.1609599,
+        "lng": -86.7754568
+      }
+    },
+    {
+      "name": "Printers Alley",
+      "address": "Printers Alley Between Union St and, Commerce St, Nashville",
+      "place_id": "ChIJBR26vVlmZIgRHKQ25ERIv6A",
+      "score": 88,
+      "reasoning": "Printers Alley scores highly for its excellent live music relevance and cultural appeal, perfectly matching the group's interests. It's also very suitable for a friends' trip. While the Google Places data indicates a 'wheelchair_accessible_entrance', the nature of an alley and potential for crowds could present minor challenges for a traveler with a walker and those preferring less walking, slightly impacting the 'relaxed pace' and full accessibility score. Cost-wise, exploring the alley is free, with dining and entertainment expenses being variable.",
+      "location": {
+        "lat": 36.1646491,
+        "lng": -86.77879539999999
+      }
+    },
+    {
+      "name": "Honky Tonk Highway",
+      "address": "501 Broadway, Nashville",
+      "place_id": "ChIJ7QEyJu5nZIgRJwrOkb-YMRk",
+      "score": 78,
+      "reasoning": "Honky Tonk Highway excels in music relevance (25/25) and value/cost (10/10) as entry is free with continuous live music, fitting the budget and interests perfectly. It's also very group-friendly for friends in their 40s (13/15). However, accessibility is a major concern (20/30); while entrances may be wheelchair accessible, the extreme crowds on the street and within bars will make navigation difficult for a walker and contradict the 'not ok with much walking' preference. This high-energy, loud environment also makes it less 'relaxed pace friendly' (10/20).",
+      "location": {
+        "lat": 36.1603925,
+        "lng": -86.7784322
+      }
+    },
+    {
+      "name": "Parmer Park",
+      "address": "578 Leake Ave, Nashville",
+      "place_id": "ChIJOxUiB65jZIgRhAQ3Drl2FQA",
+      "score": 74,
+      "reasoning": "Parmer Park scores well for accessibility (explicitly wheelchair accessible entrance) and offers a relaxed pace, fitting for the group's needs and a traveler using a walker. As a public park, it's highly group-friendly and provides excellent value (likely free), aligning with the budget-friendly trip. However, it scores very low on music relevance, which is a primary interest for the group, and offers limited specific historical or cultural engagement based on the provided information, though it does cater to the 'outdoor activities' interest.",
+      "location": {
+        "lat": 36.1028901,
+        "lng": -86.8606142
+      }
+    },
+    {
+      "name": "Sudekum Planetarium",
+      "address": "800 Fort Negley Blvd, Nashville",
+      "place_id": "ChIJt8ez9WRmZIgREdOgKAAM0P0",
+      "score": 70,
+      "reasoning": "The Sudekum Planetarium scores highly for its excellent accessibility (wheelchair accessible entrance and primarily seated experience, ideal for a traveler with a walker and no much walking preference) and relaxed pace. It's a budget-friendly option and suitable for a friends' trip. However, it completely misses the group's strong interest in live music, and doesn't align with outdoor activities or history, thus lowering the overall score.",
+      "location": {
+        "lat": 36.1464958,
+        "lng": -86.7760665
+      }
+    },
+    {
+      "name": "Nashville downtown",
+      "address": "Nashville",
+      "place_id": "ChIJd_LNHzBnZIgR89SF0bduiCg",
+      "score": 68,
+      "reasoning": "Nashville downtown is excellent for live music, history, and culture, perfectly matching the group's interests and age. It offers great value with free music options and vegetarian-friendly dining, suitable for a friends' trip and a packed itinerary. However, the 'not ok with much walking' requirement for the traveler with a walker is a significant concern for a downtown area, potentially necessitating frequent rideshares and impacting the relaxed pace. August heat and humidity could also make extended outdoor periods uncomfortable.",
+      "location": {
+        "lat": 36.1626638,
+        "lng": -86.7816016
+      }
+    },
+    {
+      "name": "Fort Nashborough",
+      "address": "170 1st Ave N, Nashville",
+      "place_id": "ChIJAVmmalpmZIgRz8FhEAQlZGY",
+      "score": 68,
+      "reasoning": "Fort Nashborough offers excellent value (free entry) and high accessibility with a wheelchair-friendly entrance and minimal walking. It aligns well with historical and cultural interests for a relaxed-paced visit. However, it lacks relevance to live music, a key interest, and while generally group-friendly, it may not be the most engaging activity for a friends' trip seeking interactive experiences.",
+      "location": {
+        "lat": 36.1642682,
+        "lng": -86.7754305
+      }
+    },
+    {
+      "name": "Tootsies Orchid Lounge",
+      "address": "422 Broadway, Nashville",
+      "place_id": "ChIJo0_dOVlmZIgR1LQajfg9viM",
+      "score": 63,
+      "reasoning": "Tootsies Orchid Lounge scores highly for its perfect alignment with your group's interest in live music and offers excellent value as there's typically no cover charge, aligning with your budget-friendly per-person goal. However, despite having a wheelchair-accessible entrance, the practical experience for a traveler using a walker, especially for a group 'NOT ok with much walking,' is a significant concern. Broadway honky-tonks are often extremely crowded and loud, making internal navigation and finding comfortable seating challenging and far from a 'relaxed pace.' Vegetarian food options are also likely very limited. While it's a lively spot for a friends' trip with a 'packed' style, the environment may pose practical difficulties for accessibility and comfort.",
+      "location": {
+        "lat": 36.1609016,
+        "lng": -86.77829229999999
+      }
+    },
+    {
+      "name": "Cheekwood",
+      "address": "1200 Forrest Park Dr, Nashville",
+      "place_id": "ChIJa4wvovBiZIgRI6Lt_1xPLsI",
+      "score": 36,
+      "reasoning": "Cheekwood scores low primarily due to significant mismatches with key trip details. While it offers a wheelchair accessible entrance and is budget-friendly, its large botanical garden nature (55 acres) is a major concern for a group not okay with much walking and including a traveler using a walker, making a relaxed pace difficult to achieve if trying to see much. It also has no direct relevance to live music, a key interest. While suitable for friends in their 40s and offering culture/history, the mobility and music mismatches heavily outweigh the positives for this specific group.",
+      "location": {
+        "lat": 36.0884471,
+        "lng": -86.8759749
+      }
+    },
+    {
+      "name": "Brookmeade Greenway, Trailhead.",
+      "address": "7004 Charlotte Pike, Nashville",
+      "place_id": "ChIJ35cF2v2JZIgRdKwjXmLcLbM",
+      "score": 24,
+      "reasoning": "This attraction is a poor fit for the group's needs. As a greenway/trailhead, it inherently involves significant walking, which directly contradicts the requirement for a walker user and a group 'NOT ok with much walking'. It has no music relevance, which is a key interest. While free (high monetary value), its experiential value is low due to poor alignment with essential accessibility needs and primary interests, making it not 'worth the time' for a packed friends' trip.",
+      "location": {
+        "lat": 36.1302351,
+        "lng": -86.9047219
+      }
+    },
+    {
+      "name": "Deep Well Trailhead - Warner Park",
+      "address": "Nashville",
+      "place_id": "ChIJI7EoaZRiZIgRE_fb728X4Vs",
+      "score": 18,
+      "reasoning": "This attraction is a poor fit for the group's needs. While the entrance is listed as wheelchair accessible and it's free (good for budget), it is a 'Trailhead' primarily for walking and hiking, which directly conflicts with the group's strict requirement for 'NOT ok with much walking' and a traveler using a walker. There is no music relevance, a key interest. The core activity of the attraction is incompatible with the desired relaxed pace and mobility constraints, making the overall value low despite being free.",
+      "location": {
+        "lat": 36.0748119,
+        "lng": -86.8812782
+      }
+    }
+  ]
+}
