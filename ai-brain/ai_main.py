@@ -11,7 +11,7 @@ def main():
     """
     Main function to run the AI chatbot for travel planning.
     """
-    print("Welcome to Aitrav! Your AI travel assistant.")
+    print("Welcome to FastTrip! Your AI travel assistant.")
     print("You can ask me about your trip, get recommendations, or just chat!")
     
     #Start the chatbot conversation
@@ -53,7 +53,7 @@ def main():
         print(f"Error generating itinerary: {e}")
         raise
 
-    print("\nThank you for using Aitrav! Have a great trip!")
+    print("\nThank you for using FastTrip! Have a great trip!")
 
 if __name__ == "__main__":
     main()
