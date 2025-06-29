@@ -3,7 +3,7 @@ An intelligent travel planning platform designed specifically for accessibility-
 
 ## 🌟 Overview
 FastTrip is an AI-powered travel planning platform that prioritizes accessibility and ease of use for travelers aged 55 and above. Built during a 48-hour hackathon, it leverages Google Gemini AI to provide personalized, accessibility-focused travel recommendations and itineraries.
-
+### [Demo](https://drive.google.com/file/d/1aEV7GtAFdfEdpCkorSwyDbsyh4MK7tXq/view?usp=sharing)
 ## ✨ Key Features
 ### 🤖 AI-Powered Conversation
 - Natural language trip planning with Google Gemini 2.5 Flash
